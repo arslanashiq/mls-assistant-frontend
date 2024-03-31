@@ -2,7 +2,7 @@
 import { LISTING_STATUS } from "@/utilis/constants";
 import { debounce } from "@/utilis/debounce";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const HeroContent = () => {
   const router = useRouter();
@@ -231,7 +231,12 @@ const HeroContent = () => {
   const showSearchModal = () => {
     setShowModal(true);
   }
-
+  const searchInputRef = useRef(null);
+  useEffect(() => {
+    if (showModal) {
+      searchInputRef.current.focus();
+    }
+  }, [showModal]);
   return (
     <>
       <div className="mx-auto" data-aos="fade-up">
@@ -313,6 +318,7 @@ const HeroContent = () => {
                   name="search"
                   placeholder={`Search by City, State & Zipcode... `}
                   value={searchTerm}
+                  ref={searchInputRef}
                   onChange={handleInputChange}
                 />
             </div>
