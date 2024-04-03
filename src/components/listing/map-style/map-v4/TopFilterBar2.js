@@ -91,16 +91,23 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       document.body.style.overflow = '';
     };
   }, [showModal]);
-  // useEffect(() => {
-  //   if (showModal) {
-  //     $("#searchInput").focus();
-  //   }
-  // }, [showModal]);
   useEffect(() => {
     if (showModal) {
       searchInputRef.current.focus();
     }
   }, [showModal]);
+  const [newSearch, setNewSearch] = useState(filterFunctions.searchQuery);
+  const handleInputChange = (value) => {
+    console.log(value);
+    setNewSearch(value);
+  }
+
+
+
+
+
+
+
   return (
     <>
       {
@@ -312,13 +319,15 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                   id="searchInput"
                   ref={searchInputRef}
                   placeholder={`Search by City, State & Zipcode... `}
-                  value={filterFunctions.searchQuery}
-                  onChange={(e) =>
-                    filterFunctions &&
-                    filterFunctions.setSearchQuery(e.target.value)
-                  }
+                  value={newSearch}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  // onChange={(e) =>
+                  //   filterFunctions &&
+                  //   filterFunctions.setSearchQuery(e.target.value)
+                  // }
                 />
             </div>
+
             <div className="container mt75">
               <div className="radio-group">
                 <input type="radio" id="option-one" name="selector" onClick={() => handleTabClick(LISTING_STATUS[0])} checked={filterFunctions.listingStatus.value === LISTING_STATUS[0]?.value} /><label htmlFor="option-one">{LISTING_STATUS[0]?.label}</label>

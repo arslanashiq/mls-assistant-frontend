@@ -159,11 +159,11 @@ export default function PropertyFilteringMapFive({ data }) {
     }
 
     // Add search query filter
-    if (searchQuery) {
-      filterArray.push(
-        `contains(tolower(UnparsedAddress), tolower('${searchQuery}'))`
-      );
-    }
+    // if (searchQuery) {
+    //   filterArray.push(
+    //     `contains(tolower(UnparsedAddress), tolower('${searchQuery}'))`
+    //   );
+    // }
 
     // Construct the $filter parameter
     if (filterArray.length > 0) {
@@ -239,6 +239,10 @@ export default function PropertyFilteringMapFive({ data }) {
   const handleActiveStatus = (status) => {
     setActiveStatus(status);
   };
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+    console.log(filterFunctions.searchQuery)
+  };
   const filterFunctions = {
     handlelistingStatus,
     handlepropertyTypes,
@@ -267,6 +271,7 @@ export default function PropertyFilteringMapFive({ data }) {
     activeStatus,
     searchQuery,
     setActiveStatus,
+    handleSearch
   };
 
   const handleClickProperty = (listing) => {

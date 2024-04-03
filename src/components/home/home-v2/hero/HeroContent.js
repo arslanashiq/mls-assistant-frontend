@@ -150,7 +150,7 @@ const HeroContent = () => {
     const isZipCode = /^\d{5}(?:[-\s]\d{4})?$/.test(searchTerm.trim());
     let selectedCity = handleGetSelectedCity(cities);
     if (selectedSuggestion) {
-      // console.log("Navigate based on selected suggestion");
+      console.log("Navigate based on selected suggestion");
       const [city, state] = selectedSuggestion
         .split(",")
         .map((item) => item.trim());
@@ -160,7 +160,7 @@ const HeroContent = () => {
         )}&listingStatus=${activeTab}${handleGetPropertyId(selectedCity)}`
       );
     } else if (isGoogleSuggestion) {
-      // console.log("Navigate based on Google suggestion");
+      console.log("Navigate based on Google suggestion");
       router.push(
         `/properties?address=${encodeURIComponent(
           searchTerm
@@ -172,14 +172,14 @@ const HeroContent = () => {
         }`
       );
     } else if (isZipCode) {
-      // console.log("Navigate directly to properties page based on zip code");
+      console.log("Navigate directly to properties page based on zip code");
       router.push(
         `/properties?address=${encodeURIComponent(
           searchTerm
         )}&listingStatus=${activeTab}`
       );
     } else {
-      // console.log("Navigate based on bridges suggestion");
+      console.log("Navigate based on bridges suggestion");
       const [city, state, postalCode] = searchTerm
         .split(",")
         .map((item) => item.trim());
@@ -307,7 +307,7 @@ const HeroContent = () => {
       </div>
       {showModal ? (
         <div className="search-popup">
-          <form autoComplete="off">
+          <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={`search-header ${isMobile ? 'sticky-header' : ''}`}>
                 <button onClick={() => setShowModal(false)}>
                   <i className="fa-solid fa-chevron-left"></i>
