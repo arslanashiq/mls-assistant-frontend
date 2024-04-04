@@ -4,7 +4,7 @@ import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 
 const PriceRange = ({filterFunctions}) => {
-  const [price, setPrice] = useState({ value: { min: 20, max: 10000000 } });
+  const [price, setPrice] = useState({ value: { min: 20, max: 1000000000 } });
 
   // price range handler
   const handleOnChange = (value) => {
@@ -17,7 +17,7 @@ const PriceRange = ({filterFunctions}) => {
       <div className="range-wrapper">
         <InputRange
           formatLabel={() => ``}
-          maxValue={10000000}
+          maxValue={1000000000}
           minValue={0}
 
           value={{min:filterFunctions?.priceRange[0],max:filterFunctions?.priceRange[1]}}

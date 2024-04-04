@@ -24,7 +24,7 @@ function usePropertySearchParams() {
     listingStatus: searchParams.get("listingStatus") || "All",
     activeStatus: searchParams.get("activeStatus") || "Active",
     minPriceRange: searchParams.get("minPriceRange") || 0,
-    maxPriceRange: searchParams.get("maxPriceRange") || 1000000,
+    maxPriceRange: searchParams.get("maxPriceRange") || 100000000,
     bedrooms: searchParams.get("bedrooms") || 0,
     bathroms: searchParams.get("bathroms") || 0,
     propertyAddress: searchParams.get("propertyAddress") || "",

@@ -52,7 +52,7 @@ export default function PropertyFilteringMapFive({ data }) {
   });
   const [propertyTypes, setPropertyTypes] = useState([]);
 
-  const [priceRange, setPriceRange] = useState([0, 1000000]);
+  const [priceRange, setPriceRange] = useState([0, 1000000000]);
   const [bedrooms, setBedrooms] = useState(0);
   const [bathroms, setBathroms] = useState(0);
   const [location, setLocation] = useState("All Cities");
@@ -69,7 +69,7 @@ export default function PropertyFilteringMapFive({ data }) {
   const resetFilter = () => {
     // setListingStatus({ value: "All", label: "All" });
     setPropertyTypes([]);
-    setPriceRange([0, 100000]);
+    setPriceRange([0, 1000000000]);
     setBedrooms(0);
     setBathroms(0);
     setLocation("All Cities");
