@@ -269,6 +269,7 @@ export default function PropertyFilteringMapFive({ data }) {
     const newString = convertParamsObjectToString(newObject);
     // return;
     router.replace(`${pathName}?${newString}`);
+    setLoading(false)
   };
   const filterFunctions = {
     handlelistingStatus,
@@ -561,7 +562,7 @@ export default function PropertyFilteringMapFive({ data }) {
                         loading={loading}
                       />
                     )
-                  }
+                  } 
                 </div>
                 {/* End .row */}
 
