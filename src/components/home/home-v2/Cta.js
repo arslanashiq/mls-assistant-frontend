@@ -45,7 +45,7 @@ const Cta = () => {
             >
               <div className="cta-style2">
                 <h2 className="cta-title">
-                  Start Listing or Buying a Property With MLS Assisstant
+                  Start Listing or Buying a Property With MLS Assistant
                 </h2>
                 <p className="cta-text">
                   Talk to our experts or Browse through more properties.

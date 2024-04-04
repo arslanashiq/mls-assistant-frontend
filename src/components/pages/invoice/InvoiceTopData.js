@@ -6,7 +6,7 @@ const InvoiceTopData = () => {
       title: "Invoice date:",
       date: "22 April 2022",
       heading: "Supplier",
-      name: "MLS Assisstant LLC",
+      name: "MLS Assistant LLC",
       address: (
         <>
           2301 Ravenswood Rd Madison, <br /> WI 53711

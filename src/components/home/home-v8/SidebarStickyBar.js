@@ -14,8 +14,8 @@ const contactInfo = {
     url: "tel:29110987654",
   },
   email: {
-    address: "info@MLS Assisstant.com",
-    url: "mailto:info@MLS Assisstant.com",
+    address: "info@MLS Assistant.com",
+    url: "mailto:info@MLS Assistant.com",
   },
 };
 

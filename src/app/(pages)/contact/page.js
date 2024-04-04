@@ -53,7 +53,7 @@ const Contact = () => {
               </h2>
               <p className="text">
                 We are here to answer any question you may have. As a partner of
-                corporates, MLS Assisstant has more than 9,000 offices of all sizes and
+                corporates, MLS Assistant has more than 9,000 offices of all sizes and
                 all potential of session.
               </p>
             </div>
@@ -75,7 +75,7 @@ const Contact = () => {
               <div className="main-title text-center">
                 <h2 className="title">Visit Our Office</h2>
                 <p className="paragraph">
-                  MLS Assisstant has more than 9,000 offices of all sizes and all
+                  MLS Assistant has more than 9,000 offices of all sizes and all
                   potential of session.
                 </p>
               </div>

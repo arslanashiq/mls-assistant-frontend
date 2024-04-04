@@ -34,7 +34,7 @@ const SidebarPanel = () => {
         >
           <span className="far fa-times"></span>
         </div>
-        <h4 className="title">Welcome to MLS Assisstant</h4>
+        <h4 className="title">Welcome to MLS Assistant</h4>
       </div>
       {/* End header */}
 

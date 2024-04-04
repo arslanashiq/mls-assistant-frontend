@@ -10,7 +10,7 @@ const Cta = () => {
             <div className="cta-style4 position-relative text-center">
               <h6 className="sub-title fw400 text-white">BUY OR SELL</h6>
               <h1 className="cta-title mb30 text-white">
-                Looking to Buy a new property or sell an existing one? MLS Assisstant
+                Looking to Buy a new property or sell an existing one? MLS Assistant
                 provides an awesome solution!
               </h1>
               <div className="d-block d-sm-flex justify-content-center">

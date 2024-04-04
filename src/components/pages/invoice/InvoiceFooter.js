@@ -3,12 +3,12 @@ import React from "react";
 const InvoiceFooter = () => {
   const footerData = [
     {
-      text: "www.MLS Assisstant.com",
-      link: "https://www.MLS Assisstant.com",
+      text: "www.MLS Assistant.com",
+      link: "https://www.MLS Assistant.com",
     },
     {
-      text: "invoice@MLS Assisstant.com",
-      link: "mailto:invoice@MLS Assisstant.com",
+      text: "invoice@MLS Assistant.com",
+      link: "mailto:invoice@MLS Assistant.com",
     },
     {
       text: "(123) 123-456",

@@ -10,7 +10,7 @@ const LoginSignupModal = ({ handleCloseLoginModal = () => {} }) => {
     <div className="modal-content">
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalToggleLabel">
-          Welcome to MLS Assisstant
+          Welcome to MLS Assistant
         </h5>
         <button
           type="button"
