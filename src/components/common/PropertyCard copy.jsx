@@ -40,8 +40,6 @@ function PropertyCard({ listing, handleClickProperty = () => {} }) {
             <span className="flaticon-electricity me-2" />
             {listing.StandardStatus}
           </div>
-          {/* {!listing.forRent && (
-  )} */}
         </div>
         <div className="list-price">
           $

@@ -15,6 +15,7 @@ import Select from "react-select";
 import { debounce } from "@/utilis/debounce";
 import { useRouter } from "next/navigation";
 import { filter } from "@/data/mobileMenuItems";
+import { RotatingLines } from 'react-loader-spinner';
 
 const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCurrentSortingOption, handleClickProperty }) => {
   const options = [
@@ -76,6 +77,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       setShowModal(true);
     }
   const handleTabClick = (tab) => {
+    filterFunctions.setLoading(true);
     filterFunctions.setListingStatus(tab);
   };
   useEffect(() => {
@@ -95,15 +97,9 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       document.body.style.overflow = '';
     };
   }, [showModal]);
-  useEffect(() => {
-    if (showModal) {
-      searchInputRef.current.focus();
-    }
-  }, [showModal]);
   const router = useRouter();
-
   const [activeTab, setActiveTab] = useState(LISTING_STATUS[1]?.value);
-  const [searchTerm, setSearchTerm] = useState(filterFunctions.searchQuery);
+  const [searchTerm, setSearchTerm] = useState();
   const [cities, setCities] = useState([]);
   const [properties, setPoperties] = useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState("");
@@ -112,7 +108,9 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   const [isGoogleSuggestion, setIsGoogleSuggestion] = useState(false);
   const [isBridgeSuggestion, setIsBridgeSuggestion] = useState(false);
   const [newSearch, setNewSearch] = useState(filterFunctions.searchQuery);
-
+  useEffect(() => {
+    setSearchTerm(filterFunctions.searchQuery);
+  }, [filterFunctions.searchQuery]);
 
   const handleInputChange = async (e) => {
     const value = e.target.value;
@@ -187,6 +185,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   const handleSuggestionClick = async (city, e) => {
     e.preventDefault(); // Prevent default link behavior
     e.stopPropagation(); // Stop event propagation
+    filterFunctions.setLoading(true);
     if (isGoogleSuggestion) {
       // const selectedTerm = handleGetSearchTerm(city);
       const cityNameWithoutCommas = city.replace(/,/g, '');
@@ -229,6 +228,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    filterFunctions.setLoading(true);
     if (isGoogleSuggestion) {
       const allCities = cities?.[0].name;
       const cityNameWithoutCommas = allCities.replace(/,/g, '');
@@ -478,11 +478,12 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       {showModal ? (
         <div className="search-popup">
           <form autoComplete="off">
-            <div className={`search-header ${isMobile ? 'sticky-header' : ''}`}>
+            <div className={`search-header justify-content-start ${isMobile ? 'sticky-header' : ''}`}>
                 <button onClick={() => setShowModal(false)}>
                   <i className="fa-solid fa-chevron-left"></i>
-                </button>
-                <input
+              </button>
+              <h1 className="fs-5 mb0">Filters</h1>
+                {/* <input
                   className="form-control "
                   type="text"
                   name="search"
@@ -495,7 +496,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                   //   filterFunctions &&
                   //   filterFunctions.setSearchQuery(e.target.value)
                   // }
-                />
+                /> */}
             </div>
 
             <div className="container mt75">
@@ -539,8 +540,22 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   
               </div>
               <div className="filter-button d-block mt-3">
-                <button type='button' className="result-btn" onClick={() => setShowModal(false)}>
-                  See {propertyCount} results
+                <button type='button' className="result-btn" onClick={() => setShowModal(false)} disabled={filterFunctions.loading? true : false}>
+                  See {
+                    filterFunctions.loading ? (
+                      <RotatingLines visible={true}
+                        height="25"
+                        width="25"
+                        color="#fff"
+                        strokeWidth="5"
+                        strokeColor="#fff"
+                        animationDuration="0.75"
+                        ariaLabel="rotating-lines-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                      />
+                    ): propertyCount 
+                  } results
                 </button>
               </div>
             </div>

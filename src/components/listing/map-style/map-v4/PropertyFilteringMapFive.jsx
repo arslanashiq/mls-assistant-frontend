@@ -14,7 +14,7 @@ import { debounce } from "@/utilis/debounce";
 import { ACTIVE_STATUS, LISTING_STATUS } from "@/utilis/constants";
 import usePropertySearchParams from "@/custom-hooks/usePropertySearchParams";
 import { useAppContext } from "@/custom-hooks/AppContext";
-
+import ContentLoader from 'react-content-loader'
 export default function PropertyFilteringMapFive({ data }) {
   const router = useRouter();
   const pathName = usePathname();
@@ -40,7 +40,7 @@ export default function PropertyFilteringMapFive({ data }) {
   const [totalPages, setTotalPages] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [loading, setLoading] = useState(true);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const endOffset = itemOffset + itemsPerPage;
   const currentItems = items.slice(itemOffset, endOffset);
@@ -197,10 +197,12 @@ export default function PropertyFilteringMapFive({ data }) {
     setPageNumber(selectedPage.selected + 1); // Add 1 to account for 0-based indexing
   };
   const handlelistingStatus = (elm) => {
+    setLoading(true);
     setListingStatus((pre) => (pre == elm ? "All" : elm));
   };
 
   const handlepropertyTypes = (elm) => {
+    setLoading(true);
     if (elm == "All") {
       setPropertyTypes([]);
     } else {
@@ -210,24 +212,31 @@ export default function PropertyFilteringMapFive({ data }) {
     }
   };
   const handlepriceRange = (elm) => {
+    setLoading(true);
     setPriceRange(elm);
   };
   const handlebedrooms = (elm) => {
+    setLoading(true);
     setBedrooms(elm);
   };
   const handlebathroms = (elm) => {
+    setLoading(true);
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
+    setLoading(true);
     setLocation(elm);
   };
   const handlesquirefeet = (elm) => {
+    setLoading(true);
     setSquirefeet(elm);
   };
   const handleyearBuild = (elm) => {
+    setLoading(true);
     setyearBuild(elm);
   };
   const handlecategories = (elm) => {
+    setLoading(true);
     if (elm == "All") {
       setCategories([]);
     } else {
@@ -237,9 +246,11 @@ export default function PropertyFilteringMapFive({ data }) {
     }
   };
   const handleActiveStatus = (status) => {
+    setLoading(true);
     setActiveStatus(status);
   };
   const handleSearch = (value) => {
+    setLoading(true);
     setSearchQuery(value);
   };
   const handleClickProperty = (listing) => {
@@ -288,7 +299,9 @@ export default function PropertyFilteringMapFive({ data }) {
     searchQuery,
     setActiveStatus,
     handleSearch,
-    handleClickProperty
+    handleClickProperty,
+    setLoading,
+    loading
   };
 
 
@@ -319,6 +332,7 @@ export default function PropertyFilteringMapFive({ data }) {
           );
           setPropertyCount(response.data["@odata.count"]);
           setPageItems(response.data.value);
+          setLoading(false);
           // updateUrl(pageNumber); // Update URL with current page number
         }
       } catch (error) {
@@ -452,7 +466,7 @@ export default function PropertyFilteringMapFive({ data }) {
       return;
     }
   }, [params]);
-  
+  console.log(loading)
   return (
     <>
       <PropertyDetailModal
@@ -527,11 +541,27 @@ export default function PropertyFilteringMapFive({ data }) {
                   />
                 </div>
                 <div className="row">
-                  <FeaturedListings
-                    colstyle={colstyle}
-                    listings={pageItems}
-                    handleClickProperty={handleClickProperty}
-                  />
+                  {
+                    loading ? (
+                      [...Array(10)].map((_, index) => (
+                        <div className="col-md-6" key={index}>
+                          <ContentLoader viewBox="0 0 500 280" speed={1} backgroundColor="#cccccc" foregroundColor="#a1a1a1">
+                            <rect x="3" y="3" rx="10" ry="10" width="100%" height="180" />
+                            <rect x="6" y="190" rx="0" ry="0" width="80%" height="20" />
+                            <rect x="4" y="215" rx="0" ry="0" width="75%" height="20" />
+                            <rect x="4" y="242" rx="0" ry="0" width="90%" height="20" />
+                          </ContentLoader>
+                        </div>
+                      ))
+                    ) : (
+                      <FeaturedListings
+                        colstyle={colstyle}
+                        listings={pageItems}
+                        handleClickProperty={handleClickProperty}
+                        loading={loading}
+                      />
+                    )
+                  }
                 </div>
                 {/* End .row */}
 

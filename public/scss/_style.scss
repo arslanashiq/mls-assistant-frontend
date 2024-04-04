@@ -11000,6 +11000,10 @@ input:focus-visible {
             color: #fff;
             font-size: 16px;
         }
+        .reset{
+            background-color: #dde6ef;
+            color: #000;
+        }
     }
     .h-500{
         height: 800px;
@@ -11092,6 +11096,7 @@ input:focus-visible {
         border-bottom: 2px solid #0076ff;
         position: fixed;
         top: 0;
+        height: 57px;
         button{
             width: 55px;
             height: 55px;
@@ -11099,6 +11104,9 @@ input:focus-visible {
             color: #000;
             font-size: 16px;
             background-color: #fff;
+            // position: absolute;
+            // left: 0;
+            // top: 0;
         }
         input{
             border-color: #fff;

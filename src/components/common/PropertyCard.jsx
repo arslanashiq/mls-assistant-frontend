@@ -35,6 +35,12 @@ function PropertyCard({ listing, handleClickProperty = () => {} }) {
           alt="listings"
           onClick={() => handleClickProperty(listing)}
         />
+        <div className="sale-sticker-wrap">
+          <div className="list-tag fz12">
+            <span className="flaticon-electricity me-2" />
+            {listing.StandardStatus}
+          </div>
+        </div>
         <button onClick={() => handleClickLikeButton(listing)} className="like-button">
           <span className={isLiked ? "fa-solid fa-heart color-red" : "flaticon-like"}/>
         </button>
