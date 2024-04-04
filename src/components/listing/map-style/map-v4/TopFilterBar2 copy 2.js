@@ -14,9 +14,8 @@ import { LISTING_STATUS } from "@/utilis/constants";
 import Select from "react-select";
 import { debounce } from "@/utilis/debounce";
 import { useRouter } from "next/navigation";
-import { filter } from "@/data/mobileMenuItems";
 
-const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCurrentSortingOption, handleClickProperty }) => {
+const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCurrentSortingOption }) => {
   const options = [
     { id: "flexRadioDefault3", label: "All", value: "All"},
     { id: "flexRadioDefault1", label: "Active", value: "Active", defaultChecked: true},
@@ -110,7 +109,6 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [propertyData, setPropertyData] = useState(null); // Store fetched property data
   const [isGoogleSuggestion, setIsGoogleSuggestion] = useState(false);
-  const [isBridgeSuggestion, setIsBridgeSuggestion] = useState(false);
   const [newSearch, setNewSearch] = useState(filterFunctions.searchQuery);
 
 
@@ -173,7 +171,6 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       );
       const data = await response.json();
       if (data.value.length > 0) {
-        setIsBridgeSuggestion(true)
         setCities(getCitiesDataFromBridgeApiResponse(data.value));
         setShowSuggestions(true);
       } else {
@@ -187,15 +184,8 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   const handleSuggestionClick = async (city, e) => {
     e.preventDefault(); // Prevent default link behavior
     e.stopPropagation(); // Stop event propagation
-    if (isGoogleSuggestion) {
-      // const selectedTerm = handleGetSearchTerm(city);
-      const cityNameWithoutCommas = city.replace(/,/g, '');
-      setSearchTerm(cityNameWithoutCommas);
-      filterFunctions.setSearchQuery(cityNameWithoutCommas);
-    } else {
-      setSearchTerm(city); // Set the search term directly if it's a Bridge suggestion
-    }
     setSelectedSuggestion(city);
+    setSearchTerm(city);
     setShowSuggestions(false);
     await handleSubmit(e); // Submit the selected suggestion
   };
@@ -213,6 +203,17 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
     }
     return "";
   };
+
+  const handleGetSearchTerm = (selectedCity) => {
+    if (selectedCity?.id) {
+      return selectedCity?.name?.split(",")?.[1]?.replace(/,\s*/g, " ");
+    }
+    return searchTerm
+      .replace(/,/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  };
+
   const handleGetSelectedCity = (citiesList) => {
     return citiesList.find((city) =>
       city?.name
@@ -229,40 +230,67 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isGoogleSuggestion) {
-      const allCities = cities?.[0].name;
-      const cityNameWithoutCommas = allCities.replace(/,/g, '');
-      setSearchTerm(cityNameWithoutCommas);
-      filterFunctions.setSearchQuery(cityNameWithoutCommas);
-      setShowSuggestions(false);
-    } else if (isBridgeSuggestion) {
-      getBridgeData(cities?.[0].id)
-        .then((propertyData) => {
-          if (propertyData?.[0]) {
-            handleClickProperty(propertyData?.[0]);
-            setShowSuggestions(false);
-          } else {
-            console.error("No property data found.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error); // Handle errors here
-        });
+    const isZipCode = /^\d{5}(?:[-\s]\d{4})?$/.test(searchTerm.trim());
+    let selectedCity = handleGetSelectedCity(cities);
+    if (selectedSuggestion) {
+      const [city, state] = selectedSuggestion.split(",").map((item) => item.trim());
+      console.log("Navigate directly to properties page based selected");
+      console.log(selectedSuggestion);
+      filterFunctions.setSearchQuery(handleGetAddress(selectedCity));
+    } else if (isGoogleSuggestion) {
+      console.log("Navigate directly to properties page based on google code");
+      const [city, state] = selectedSuggestion
+      .split(",")
+        .map((item) => item.trim());
+      filterFunctions.setSearchQuery(handleGetAddress(selectedCity));
+    } else if (isZipCode) {
+      console.log("Navigate directly to properties page based on zip code");
+      filterFunctions.setSearchQuery(handleGetAddress(searchTerm));
+      // router.push(
+      //   `/properties?address=${encodeURIComponent(
+      //     searchTerm
+      //   )}&listingStatus=${activeTab}`
+      // );
+    } else {
+      console.log("Navigate based on bridges suggestion");
+      // const [city, state, postalCode] = searchTerm
+      //   .split(",")
+      //   .map((item) => item.trim());
+      // let fields = "UnparsedAddress";
+      // let filter = `contains(tolower(UnparsedAddress), tolower('${searchTerm}'))`;
+
+      // if (city && state && postalCode) {
+      //   fields = "City,StateOrProvince,PostalCode";
+      //   filter = `contains(tolower(City), tolower('${city}')) and StateOrProvince eq '${state}' and PostalCode eq '${postalCode}'`;
+      // }
+
+      // try {
+      //   const response = await fetch(
+      //     `https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property?access_token=23c8729a55e9986ae45ca71d18a3742c&$filter=${filter}&$select=${fields}`
+      //   );
+      //   const data = await response.json();
+      //   if (data?.value?.length > 0) {
+      //     selectedCity = handleGetSelectedCity(
+      //       getCitiesDataFromBridgeApiResponse(data.value)
+      //     );
+      //   }
+      //   console.log(data);
+      //   // router.push(
+      //   //   `/properties?address=${encodeURIComponent(
+      //   //     handleGetSearchTerm(selectedCity)
+      //   //   )}&type=${activeTab}${handleGetPropertyId(selectedCity)}`
+      //   // );
+      // } catch (error) {
+      //   console.error("Error fetching property data:", error);
+      // }
     }
   };
 
-  const getBridgeData = async (listingId) => {
-    try {
-      const response = await fetch(
-        `https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property?access_token=23c8729a55e9986ae45ca71d18a3742c&$filter=ListingKey eq '${listingId}'`
-      ); // Replace YOUR_ACCESS_TOKEN with your actual access token
-      const data = await response.json();
-      return data.value; // Assuming data.value contains the fetched property data
-    } catch (error) {
-      console.error("Error fetching Bridge data:", error);
-      return null; // Return null in case of error
-    }
-  };
+  console.log(searchTerm);
+
+
+
+
 
   return (
     <>
@@ -270,7 +298,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
         isMobile ? (
           <>
             <div className="d-flex property-search">
-              <form className="position-relative w-100" onSubmit={handleSubmit}>
+              <form className="position-relative w-100">
                 <input type="text" className="form-control" value={searchTerm} onChange={handleInputChange}/>
               </form>
               {showSuggestions && cities.length > 0 && (

@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from "react";
 const HeroContent = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(LISTING_STATUS[1]?.value);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [cities, setCities] = useState([]);
   const [properties, setPoperties] = useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState("");
@@ -15,7 +15,6 @@ const HeroContent = () => {
   const [propertyData, setPropertyData] = useState(null); // Store fetched property data
   const [isGoogleSuggestion, setIsGoogleSuggestion] = useState(false);
   const [isBridgeSuggestion, setIsBridgeSuggestion] = useState(false);
-  const [newSearch, setNewSearch] = useState('');
   const [isMobile, setIsMobile] = useState(false); // State to determine if user is on mobile
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
@@ -34,6 +33,7 @@ const HeroContent = () => {
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setSearchTerm(value);
+    // Fetch suggestions from Google Places Autocomplete API
     if (value.trim() !== "") {
       debounce(() => {
         fetchSuggestions(value);
@@ -102,18 +102,20 @@ const HeroContent = () => {
   };
 
   const handleSuggestionClick = async (city, e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault(); // Prevent default link behavior
+    e.stopPropagation(); // Stop event propagation
     if (isGoogleSuggestion) {
-      const cityNameWithoutCommas = city?.name.replace(/,/g, '');
+      const cityNameWithoutCommas = city.replace(/,/g, '');
       setSearchTerm(cityNameWithoutCommas);
     } else {
-      setSearchTerm(city?.name); // Set the search term directly if it's a Bridge suggestion
+      setSearchTerm(city); // Set the search term directly if it's a Bridge suggestion
     }
-    setSelectedSuggestion(city); // Set the selected suggestion
+    setSelectedSuggestion(city);
     setShowSuggestions(false);
-    await handleSubmit(e);
+    await handleSubmit(e); // Submit the selected suggestion
   };
+
+
   const handleGetAddress = (selectedCity = {}) => {
     if (selectedCity?.id) {
       return selectedCity?.name?.split(",")?.[1]?.replace(/,\s*/g, " ");
@@ -121,12 +123,12 @@ const HeroContent = () => {
     return selectedSuggestion?.replace(/,\s*/g, " ");
   };
   const handleGetPropertyId = (selectedCity) => {
-    console.log(selectedCity);
     if (selectedCity?.id) {
       return `&propertyId=${selectedCity.id}`;
     }
     return "";
   };
+
   const handleGetSearchTerm = (selectedCity) => {
     if (selectedCity?.id) {
       return selectedCity?.name?.split(",")?.[1]?.replace(/,\s*/g, " ");
@@ -137,26 +139,117 @@ const HeroContent = () => {
       .trim();
   };
 
+  const handleGetSelectedCity = (citiesList) => {
+    return citiesList.find((city) =>
+      city?.name
+        ?.toLowerCase()
+        ?.trim()
+        ?.split(",")?.[0]
+        ?.includes(
+          searchTerm
+            ?.toLowerCase()
+            ?.trim()
+            ?.split(",")?.[0]
+        )
+    );
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform form submission logic based on selected suggestion or bridge suggestion
-    if (!selectedSuggestion && !isBridgeSuggestion) {
-      const allCities = cities?.[0].name;
-      const cityNameWithoutCommas = allCities.replace(/,/g, '');
-      setSearchTerm(cityNameWithoutCommas);
-      var url = `/properties?address=${encodeURIComponent(cityNameWithoutCommas)}&listingStatus=${activeTab}${handleGetPropertyId(cities?.[0].id)}`;
-      router.push(url);
-    }
-    else if (isGoogleSuggestion) {
-      const cityNameWithoutCommas = selectedSuggestion?.name.replace(/,/g, '');
-      setSearchTerm(cityNameWithoutCommas);
-      var url = `/properties?address=${encodeURIComponent(cityNameWithoutCommas)}&listingStatus=${activeTab}${handleGetPropertyId(cities?.[0].id)}`;
-      router.push(url);
-    } else if (isBridgeSuggestion && !selectedSuggestion) {
-      var url = `/properties?address=${encodeURIComponent(handleGetSearchTerm(cities?.[0]))}&type=${activeTab}${handleGetPropertyId(cities?.[0])}`;
-      router.push(url);
+    console.log(searchTerm)
+    if (isGoogleSuggestion) {
+      // router.push(
+      //   `/properties?address=${encodeURIComponent(
+      //     selectedSuggestion.name
+      //       .replace(/,/g, " ")
+      //       .replace(/\s+/g, " ")
+      //       .trim()
+      //   )}&listingStatus=${activeTab}${
+      //     selectedSuggestion?.id ? `&propertyId=${selectedSuggestion.id}` : ""
+      //   }`
+      // );
+    } else if (isBridgeSuggestion) {
+      // getBridgeData(cities?.[0].id)
+      //   .then((propertyData) => {
+      //     if (propertyData?.[0]) {
+      //       handleClickProperty(propertyData?.[0]);
+      //       setShowSuggestions(false);
+      //     } else {
+      //       console.error("No property data found.");
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error); // Handle errors here
+      //   });
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const isZipCode = /^\d{5}(?:[-\s]\d{4})?$/.test(searchTerm.trim());
+  //   let selectedCity = handleGetSelectedCity(cities);
+  //   if (selectedSuggestion) {
+  //     console.log("Navigate based on selected suggestion");
+  //     // const [city, state] = selectedSuggestion
+  //     //   .split(",")
+  //     //   .map((item) => item.trim());
+  //     // router.push(
+  //     //   `/properties?address=${encodeURIComponent(
+  //     //     handleGetAddress(selectedCity)
+  //     //   )}&listingStatus=${activeTab}${handleGetPropertyId(selectedCity)}`
+  //     // );
+  //   } else if (isGoogleSuggestion) {
+  //     console.log("Navigate based on Google suggestion");
+  //     // router.push(
+  //     //   `/properties?address=${encodeURIComponent(
+  //     //     searchTerm
+  //     //       .replace(/,/g, " ")
+  //     //       .replace(/\s+/g, " ")
+  //     //       .trim()
+  //     //   )}&listingStatus=${activeTab}${
+  //     //     selectedCity?.id ? `&propertyId=${selectedCity.id}` : ""
+  //     //   }`
+  //     // );
+  //   } else if (isZipCode) {
+  //     console.log("Navigate directly to properties page based on zip code");
+  //     // router.push(
+  //     //   `/properties?address=${encodeURIComponent(
+  //     //     searchTerm
+  //     //   )}&listingStatus=${activeTab}`
+  //     // );
+  //   } else {
+  //     console.log("Navigate based on bridges suggestion");
+  //     // const [city, state, postalCode] = searchTerm
+  //     //   .split(",")
+  //     //   .map((item) => item.trim());
+  //     // let fields = "UnparsedAddress";
+  //     // let filter = `contains(tolower(UnparsedAddress), tolower('${searchTerm}'))`;
+
+  //     // if (city && state && postalCode) {
+  //     //   fields = "City,StateOrProvince,PostalCode";
+  //     //   filter = `contains(tolower(City), tolower('${city}')) and StateOrProvince eq '${state}' and PostalCode eq '${postalCode}'`;
+  //     // }
+
+  //     // try {
+  //     //   const response = await fetch(
+  //     //     `https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property?access_token=23c8729a55e9986ae45ca71d18a3742c&$filter=${filter}&$select=${fields}`
+  //     //   );
+  //     //   const data = await response.json();
+  //     //   if (data?.value?.length > 0) {
+  //     //     selectedCity = handleGetSelectedCity(
+  //     //       getCitiesDataFromBridgeApiResponse(data.value)
+  //     //     );
+  //     //   }
+  //     //   router.push(
+  //     //     `/properties?address=${encodeURIComponent(
+  //     //       handleGetSearchTerm(selectedCity)
+  //     //     )}&type=${activeTab}${handleGetPropertyId(selectedCity)}`
+  //     //   );
+  //     // } catch (error) {
+  //     //   console.error("Error fetching property data:", error);
+  //     // }
+  //   }
+  // };
+
+
 
 
   useEffect(() => {
@@ -196,7 +289,7 @@ const HeroContent = () => {
                   <h2 className="text-center text-white text-uppercase fs-md-5 fs-3">Find a home in a neighborhood you love.</h2>
                   {
                     isMobile ? (
-                        <form className="form-search position-relative" autoComplete="off" >
+                        <form className="form-search position-relative" autoComplete="off" onSubmit={handleSubmit}>
                           <div className="box-search">
                             <input className="form-control " type="text" name="search" placeholder={`Search by City, State & Zipcode... `} onClick={showSearchModal}/>
                           </div>
@@ -230,7 +323,7 @@ const HeroContent = () => {
                                 <li
                                   key={index}
                                   onClick={(e) =>
-                                    handleSuggestionClick(city, e)
+                                    handleSuggestionClick(city.name, e)
                                   }
                                 >
                                   {city.name}
@@ -257,7 +350,7 @@ const HeroContent = () => {
         <div className="search-popup">
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={`search-header ${isMobile ? 'sticky-header' : ''}`}>
-                <button onClick={() => setShowModal(false)} type="button">
+                <button onClick={() => setShowModal(false)}>
                   <i className="fa-solid fa-chevron-left"></i>
                 </button>
                 <input
@@ -267,7 +360,7 @@ const HeroContent = () => {
                   placeholder={`Search by City, State & Zipcode... `}
                   value={searchTerm}
                   ref={searchInputRef}
-                  onChange={(e) => handleInputChange(e)}
+                  onChange={handleInputChange}
                 />
             </div>
             <div className="container mt75">
@@ -288,7 +381,7 @@ const HeroContent = () => {
                     <li
                       key={index}
                       onClick={(e) =>
-                        handleSuggestionClick(city, e)
+                        handleSuggestionClick(city.name, e)
                       }
                     >
                       {city.name}

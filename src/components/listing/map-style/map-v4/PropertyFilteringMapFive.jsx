@@ -159,11 +159,11 @@ export default function PropertyFilteringMapFive({ data }) {
     }
 
     // Add search query filter
-    // if (searchQuery) {
-    //   filterArray.push(
-    //     `contains(tolower(UnparsedAddress), tolower('${searchQuery}'))`
-    //   );
-    // }
+    if (searchQuery) {
+      filterArray.push(
+        `contains(tolower(UnparsedAddress), tolower('${searchQuery}'))`
+      );
+    }
 
     // Construct the $filter parameter
     if (filterArray.length > 0) {
@@ -241,7 +241,23 @@ export default function PropertyFilteringMapFive({ data }) {
   };
   const handleSearch = (value) => {
     setSearchQuery(value);
-    console.log(filterFunctions.searchQuery)
+  };
+  const handleClickProperty = (listing) => {
+    localStorage.setItem("currentUrl", window.location.href);
+    sessionStorage.setItem("search", JSON.stringify(paramsObject));
+    setParams({ id: listing.ListingKey, data: listing });
+  };
+  const handleClickCloseModal = () => {
+    setParams({ ...params, id: null });
+    const localSearchObject = JSON.parse(sessionStorage.getItem("search"));
+    const newObject = {
+      ...paramsObject,
+      ...localSearchObject,
+      address: splitPropertyAddress(0),
+    };
+    const newString = convertParamsObjectToString(newObject);
+    // return;
+    router.replace(`${pathName}?${newString}`);
   };
   const filterFunctions = {
     handlelistingStatus,
@@ -271,26 +287,11 @@ export default function PropertyFilteringMapFive({ data }) {
     activeStatus,
     searchQuery,
     setActiveStatus,
-    handleSearch
+    handleSearch,
+    handleClickProperty
   };
 
-  const handleClickProperty = (listing) => {
-    localStorage.setItem("currentUrl", window.location.href);
-    sessionStorage.setItem("search", JSON.stringify(paramsObject));
-    setParams({ id: listing.ListingKey, data: listing });
-  };
-  const handleClickCloseModal = () => {
-    setParams({ ...params, id: null });
-    const localSearchObject = JSON.parse(sessionStorage.getItem("search"));
-    const newObject = {
-      ...paramsObject,
-      ...localSearchObject,
-      address: splitPropertyAddress(0),
-    };
-    const newString = convertParamsObjectToString(newObject);
-    // return;
-    router.replace(`${pathName}?${newString}`);
-  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -471,6 +472,7 @@ export default function PropertyFilteringMapFive({ data }) {
                       getFilterString={getFilterStringForSaveSearch}
                       propertyCount={propertyCount}
                       setCurrentSortingOption={setCurrentSortingOption}
+                      handleClickProperty={handleClickProperty}
                     />
                   </ul>
                 </div>
