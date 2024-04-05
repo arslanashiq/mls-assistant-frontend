@@ -144,7 +144,7 @@ export default function PropertyDetailModal({
                               </h4>
                               <ul className="fs-6">
                                 <div className="d-flex align-items-center">
-                                  <i class="fa-solid fa-clipboard-user mr15 fs-5"></i>
+                                  <i className="fa-solid fa-clipboard-user mr15 fs-5"></i>
                                   <div>
                                     <li>{listingAgentData?.MemberFullName}</li>
                                     <li>
@@ -153,19 +153,19 @@ export default function PropertyDetailModal({
                                         className="ml15"
                                         href={`tel:${listingAgentData?.MemberPreferredPhone}`}
                                       >
-                                        <i class="fa-solid fa-phone-volume"></i>
+                                        <i className="fa-solid fa-phone-volume"></i>
                                       </a>
                                       <a
                                         className="ml15"
                                         href={`sms:${listingAgentData?.MemberPreferredPhone}`}
                                       >
-                                        <i class="fa-regular fa-comments"></i>
+                                        <i className="fa-regular fa-comments"></i>
                                       </a>
                                     </li>
                                   </div>
                                 </div>
                                 <div className="d-flex align-items-center">
-                                  <i class="fa-solid fa-building mr15 fs-5"></i>
+                                  <i className="fa-solid fa-building mr15 fs-5"></i>
                                   <div>
                                     <li>{agentOfficeData?.OfficeName}</li>
                                     <li>
@@ -174,13 +174,13 @@ export default function PropertyDetailModal({
                                         className="ml15"
                                         href={`tel:${agentOfficeData?.OfficePhone}`}
                                       >
-                                        <i class="fa-solid fa-phone-volume"></i>
+                                        <i className="fa-solid fa-phone-volume"></i>
                                       </a>
                                       <a
                                         className="ml15"
                                         href={`sms:${agentOfficeData?.OfficePhone}`}
                                       >
-                                        <i class="fa-regular fa-comments"></i>
+                                        <i className="fa-regular fa-comments"></i>
                                       </a>
                                     </li>
                                   </div>

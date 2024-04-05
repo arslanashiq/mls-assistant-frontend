@@ -24,7 +24,6 @@ export default function SharePropertyModal({
   const [senderEmailDisabled, setSenderEmailDisabled] = React.useState(false)
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value, 'asasasasa')
     setInputs({ ...inputs, [name]: value });
   };
   const handleSubmitForm = (e) => {
@@ -45,7 +44,6 @@ export default function SharePropertyModal({
   React.useEffect(() => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
-      console.log(user, " ");
       if (user?.user_id?.email) {
         setInputs({ ...inputs, sender_email: user.user_id.email });
         setSenderEmailDisabled(true)

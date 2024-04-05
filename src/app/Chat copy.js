@@ -113,7 +113,7 @@ function Example() {
         <div>
             <div className={`chatbox ${isOpen ? "open" : ""}`}>
                 <button className='chatClose-btn' onClick={toggleChatBox}>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i className="fa-solid fa-xmark"></i>
                 </button>
                 <Chat userId={"1"} messages={messages} onSend={handleSend} />
             </div>

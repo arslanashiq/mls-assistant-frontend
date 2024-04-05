@@ -265,7 +265,7 @@ const HeroContent = () => {
                         </ul>
                       )}
                       <button className="advance-search-icon" type="submit">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i className="fa-solid fa-magnifying-glass"></i>
                         <span className="d-none">
                           Search
                         </span>

@@ -288,7 +288,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                 </ul>
               )}
               <button className="ml5" onClick={showSearchModal}>
-                <i class="fa-solid fa-sliders"></i>
+                <i className="fa-solid fa-sliders"></i>
                 <span className="ml5">
                   Filters
                 </span>
@@ -306,7 +306,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                 />
 
                 <div className="pcs_dropdown d-flex align-items-center justify-content-end">
-                  <i class="fa-solid fa-arrow-down-short-wide"></i>
+                  <i className="fa-solid fa-arrow-down-short-wide"></i>
                   <select className="form-select" onChange={(e) => setCurrentSortingOption && setCurrentSortingOption(e.target.value)}>
                     <option>Newest</option>
                     <option>Oldest</option>
@@ -459,7 +459,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                     type="button"
                     className="open-btn mb15"
                   >
-                    <i class="fa-solid fa-rotate-right"></i>
+                    <i className="fa-solid fa-rotate-right"></i>
                   </button>
                 </li>
                 <SaveSearchMenu
@@ -564,7 +564,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                         animationDuration="0.75"
                         ariaLabel="rotating-lines-loading"
                         wrapperStyle={{}}
-                        wrapperClass=""
+                        wrapperclassName=""
                       />
                     ) : propertyCount
                   } results

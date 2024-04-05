@@ -96,7 +96,7 @@ function PropertyGallery({ id, page_data }) {
         <div className="popup">
           <div className="popup-content">
             <button className="close-popup" onClick={handleClosePopup}>
-              <i class="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-xmark"></i>
             </button>
             <Gallery photos={formattedMedia} onClick={openLightbox} />
             <ModalGateway>

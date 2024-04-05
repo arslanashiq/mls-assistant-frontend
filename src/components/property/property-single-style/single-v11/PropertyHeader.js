@@ -42,7 +42,7 @@ const PropertyHeader = ({ id, page_data, backButtonClick = null }) => {
           onClick={handleBackButtonClick}
           className="back-button d-flex align-items-center"
         >
-          <i class="fa-solid fa-arrow-left"></i>
+          <i className="fa-solid fa-arrow-left"></i>
         </button>
         <div className="single-property-content mb30-md">
           <div className="single-property-content my-4">

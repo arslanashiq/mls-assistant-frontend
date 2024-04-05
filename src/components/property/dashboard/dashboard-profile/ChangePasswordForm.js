@@ -31,7 +31,7 @@ const ChangePasswordForm = ({ handleChangePassword }) => {
         }}
         id={name}
         onClick={toggleView}
-        class={inputs[name] ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}
+        className={inputs[name] ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}
       />
       // <Tooltip
       //   arrow

@@ -270,23 +270,23 @@ export default function PropertyFiltering() {
 
           {/* start mobile filter sidebar */}
           <div
-            class="offcanvas offcanvas-start p-0"
+            className="offcanvas offcanvas-start p-0"
             tabindex="-1"
             id="listingSidebarFilter"
             aria-labelledby="listingSidebarFilterLabel"
           >
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="listingSidebarFilterLabel">
+            <div className="offcanvas-header">
+              <h5 className="offcanvas-title" id="listingSidebarFilterLabel">
                 Listing Filter
               </h5>
               <button
                 type="button"
-                class="btn-close text-reset"
+                className="btn-close text-reset"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="offcanvas-body p-0">
+            <div className="offcanvas-body p-0">
               <ListingSidebar filterFunctions={filterFunctions} />
             </div>
           </div>

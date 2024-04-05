@@ -47,7 +47,7 @@ export default function SaveSearchMenu({ handleSaveSearch, getFilterString, filt
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
                   type="button">
-              <i class="fa-solid fa-file-export mr5"></i>Save Search
+              <i className="fa-solid fa-file-export mr5"></i>Save Search
             </button>
           </>
         ) : (
