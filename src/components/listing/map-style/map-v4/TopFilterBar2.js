@@ -490,11 +490,16 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       {showModal ? (
         <div className="search-popup">
           <form autoComplete="off">
-            <div className={`search-header justify-content-start ${isMobile ? 'sticky-header' : ''}`}>
-              <button onClick={() => setShowModal(false)}>
-                <i className="fa-solid fa-chevron-left"></i>
+            <div className={`search-header justify-content-between ${isMobile ? 'sticky-header' : ''}`}>
+              <div className="d-flex align-items-center">
+                <button onClick={() => setShowModal(false)} type="button" className="btn-back">
+                  <i className="fa-solid fa-chevron-left"></i>
+                </button>
+                <h1 className="fs-5 mb0">Filters</h1>
+              </div>
+              <button className="btn btn-link d-flex" type="button" onClick={filterFunctions?.resetFilter}>
+                Reset filters
               </button>
-              <h1 className="fs-5 mb0">Filters</h1>
               {/* <input
                   className="form-control "
                   type="text"

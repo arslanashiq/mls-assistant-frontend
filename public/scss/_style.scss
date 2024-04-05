@@ -763,6 +763,10 @@ li {
     .dashboard__content.property-page {
         padding: 60px 30px 20px;
     }
+    .half_map_area_content{
+        height: auto !important;
+        overflow: auto !important;
+    }
 }
 @media (max-width: 1399.98px) {
     .dashboard__content.message-page {
@@ -11097,7 +11101,7 @@ input:focus-visible {
         position: fixed;
         top: 0;
         height: 57px;
-        button{
+        .btn-back{
             width: 55px;
             height: 55px;
             border: none;

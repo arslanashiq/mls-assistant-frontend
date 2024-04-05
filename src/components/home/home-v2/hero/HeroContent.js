@@ -257,7 +257,7 @@ const HeroContent = () => {
         <div className="search-popup">
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={`search-header ${isMobile ? 'sticky-header' : ''}`}>
-                <button onClick={() => setShowModal(false)} type="button">
+                <button onClick={() => setShowModal(false)} type="button" className="btn-back">
                   <i className="fa-solid fa-chevron-left"></i>
                 </button>
                 <input
