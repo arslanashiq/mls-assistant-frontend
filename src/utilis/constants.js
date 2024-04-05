@@ -1,6 +1,6 @@
 export const LISTING_STATUS = [
   { id: "flexRadioDefault0", label: "All", value: "All", defaultChecked: true },
-  { id: "flexRadioDefault1", label: "Buy", value: "Residential" },
+  { id: "flexRadioDefault1", label: "Sale", value: "Residential" },
   { id: "flexRadioDefault2", label: "Rent", value: "Residential Lease" },
 ];
 

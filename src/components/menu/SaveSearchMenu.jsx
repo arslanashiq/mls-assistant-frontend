@@ -12,7 +12,7 @@ export default function SaveSearchMenu({ handleSaveSearch, getFilterString, filt
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [inputs, setInputs] = React.useState({name: `Homes for ${filterFunctions?.listingStatus.label} in ${filterFunctions?.searchQuery}`});
+  const [inputs, setInputs] = React.useState({name: `for ${filterFunctions?.listingStatus.label} in ${filterFunctions?.searchQuery}`});
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });

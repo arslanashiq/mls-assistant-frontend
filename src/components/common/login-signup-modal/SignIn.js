@@ -92,26 +92,9 @@ const SignIn = ({ handleCloseLoginModal = () => { } }) => {
           <hr />
           <span className="hr_top_text">OR</span>
         </div>
-
         <div className="d-grid mb10">
           <GoogleLoginButton handleCloseLoginModal={handleCloseLoginModal} />
         </div>
-        <div className="d-grid mb10">
-          <button className="ud-btn btn-fb" type="button">
-            <i className="fab fa-facebook-f" /> Continue Facebook
-          </button>
-        </div>
-        <div className="d-grid mb20">
-          <button className="ud-btn btn-apple" type="button">
-            <i className="fab fa-apple" /> Continue Apple
-          </button>
-        </div>
-        <p className="dark-color text-center mb0 mt10">
-          Not signed up?{" "}
-          <Link className="dark-color fw600" href="/register">
-            Create an account.
-          </Link>
-        </p>
       </form>
     </>
   );
