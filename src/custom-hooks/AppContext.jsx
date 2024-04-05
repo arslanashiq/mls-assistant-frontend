@@ -20,6 +20,7 @@ function AppContext({ children }) {
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [likedProperties, setLikedProperties] = useState([]);
+  const [openResetPasswordModal, setOpenResetPasswordModal] = useState(false);
 
   // ================================handlers and functions===============//
   const handleLogout = () => {
@@ -104,9 +105,7 @@ function AppContext({ children }) {
         ...inputs,
         property_object: data,
       };
-      const response = await share_property_via_email(
-        payload,
-      );
+      const response = await share_property_via_email(payload);
       if (response.code == 200) {
         enqueueSnackbar(`Property shared to ${payload?.receiver_email}`, {
           variant: "success",
@@ -144,6 +143,12 @@ function AppContext({ children }) {
     }
     enqueueSnackbar(respone.message, { variant: "error" });
   };
+  const handleCloseResetPasswordModal = (setInputs, defaultInputValues) => {
+    if (setInputs) {
+      setInputs(defaultInputValues);
+    }
+    setOpenResetPasswordModal(false);
+  };
 
   // ======================= useeffects==============================//
   useEffect(() => {
@@ -165,6 +170,8 @@ function AppContext({ children }) {
     setisLoggedIn,
     likedProperties,
     setLikedProperties,
+    openResetPasswordModal,
+    setOpenResetPasswordModal,
 
     // handlers
     handleLogout,
@@ -177,6 +184,7 @@ function AppContext({ children }) {
     handleShareProperty,
     handleClickProperty,
     handleChangePassword,
+    handleCloseResetPasswordModal,
   };
   return <MyContext.Provider value={collection}>{children}</MyContext.Provider>;
 }

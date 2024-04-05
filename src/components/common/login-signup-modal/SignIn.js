@@ -6,8 +6,8 @@ import { enqueueSnackbar } from "notistack";
 import GoogleLoginButton from "@/components/social-login/GoogleLoginButton";
 import { useAppContext } from "@/custom-hooks/AppContext";
 
-const SignIn = ({ handleCloseLoginModal = () => {} }) => {
-  const { setisLoggedIn } = useAppContext();
+const SignIn = ({ handleCloseLoginModal = () => { } }) => {
+  const { setisLoggedIn, setOpenResetPasswordModal } = useAppContext();
   const [inputs, setInputs] = useState({ email: "", password: "", type: 1 });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,9 +75,9 @@ const SignIn = ({ handleCloseLoginModal = () => {} }) => {
             <input type="checkbox" defaultChecked="checked" />
             <span className="checkmark" />
           </label>
-          <a className="fz14 ff-heading" href="#">
+          <span onClick={() => setOpenResetPasswordModal(true)} className="fz14 ff-heading" role="button">
             Lost your password?
-          </a>
+          </span>
         </div>
         {/* End  Lost your password? */}
 

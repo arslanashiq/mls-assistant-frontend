@@ -13,6 +13,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { googleKey } from "../../config/config";
 import AppContext from "@/custom-hooks/AppContext";
 import LoginModal from "@/components/modal/LoginModal";
+import EmailVerificationModal from "@/components/modal/EmailVerificationModal";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -76,6 +77,7 @@ export default function RootLayout({ children }) {
               autoHideDuration={2000}
             >
               <LoginModal />
+              <EmailVerificationModal />
               <div className="wrapper ovh">
                 {children}
                 {/* <Chat></Chat> */}

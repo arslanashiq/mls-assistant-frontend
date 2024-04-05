@@ -33,13 +33,7 @@ const ChangePasswordForm = ({ handleChangePassword }) => {
         onClick={toggleView}
         className={inputs[name] ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}
       />
-      // <Tooltip
-      //   arrow
-      //   title={`${inputs[name] ? "Hide" : "Show"} ${name?.replaceAll("_", " ")}`}
-      //   placement="top"
-      // >
 
-      // </Tooltip>
     );
   };
   return (

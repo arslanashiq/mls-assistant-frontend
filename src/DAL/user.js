@@ -43,6 +43,30 @@ export const verify_code = async (data) => {
   };
   return invokeApi(reqObj);
 };
+export const email_verificatin = async (data) => {
+  const reqObj = {
+    path: "api/app_api/email_verificatin",
+    method: "POST",
+    postData: data,
+  };
+  return invokeApi(reqObj);
+};
+export const code_verification = async (data) => {
+  const reqObj = {
+    path: "api/app_api/code_verification",
+    method: "POST",
+    postData: data,
+  };
+  return invokeApi(reqObj);
+};
+export const reset_password = async (data) => {
+  const reqObj = {
+    path: "api/app_api/reset_password",
+    method: "POST",
+    postData: data,
+  };
+  return invokeApi(reqObj);
+};
 
 export const add_customer_search_history = async (data) => {
   const reqObj = {
