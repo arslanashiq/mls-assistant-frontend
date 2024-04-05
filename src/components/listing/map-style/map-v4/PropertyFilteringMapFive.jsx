@@ -194,6 +194,7 @@ export default function PropertyFilteringMapFive({ data }) {
   const endItem = Math.min(pageNumber * itemsPerPage, totalResults);
 
   const handlePageClick = (selectedPage) => {
+    setLoading(true);
     setPageNumber(selectedPage.selected + 1); // Add 1 to account for 0-based indexing
   };
   const handlelistingStatus = (elm) => {
@@ -569,13 +570,13 @@ export default function PropertyFilteringMapFive({ data }) {
                 <div className="row text-center">
                   <ReactPaginate
                     breakLabel="..."
-                    nextLabel="Next >"
+                    nextLabel=">"
                     onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
+                    pageRangeDisplayed={2}
                     pageCount={totalPages}
-                    previousLabel="< Previous"
-                    marginPagesDisplayed={2}
-                    containerClassName={"pagination"}
+                    previousLabel="<"
+                    marginPagesDisplayed={0}
+                    containerClassName={"pagination d-flex justify-content-center"}
                     activeClassName={"active"}
                   />
                 </div>
