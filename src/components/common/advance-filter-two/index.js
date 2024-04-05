@@ -25,7 +25,7 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
     { value: "Texas", label: "Texas" },
   ];
   const options = [
-    { id: "flexRadioDefault3", label: "All", value: "All"},
+    { id: "flexRadioDefault0", label: "All", value: "All"},
     { id: "flexRadioDefault1", label: "Active", value: "Active", defaultChecked: true},
     { id: "flexRadioDefault2", label: "Active Under Contract", value: "Active Under Contract" },
     { id: "flexRadioDefault3", label: "Canceled", value: "Canceled" },
@@ -35,7 +35,7 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
     { id: "flexRadioDefault7", label: "Withdrawn", value: "Withdrawn" },
   ];
   const propertyOption = [
-    { id: "flexRadioDefault3", label: "All", value: "All" },
+    { id: "flexRadioDefault0", label: "All", value: "All" },
     { id: "flexRadioDefault1", label: "Buy", value: "Residential", defaultChecked: true},
     { id: "flexRadioDefault2", label: "Rent", value: "Residential Lease" },
   ];

@@ -17,21 +17,28 @@ const conversionList = [
 function usePropertySearchParams() {
   const searchParams = useSearchParams();
 
-  const getParamsObject = () => ({
-    itemsPerPage: searchParams.get("itemsPerPage") || 10,
-    pageNumber: searchParams.get("pageNumber") || 1,
-    orderby: searchParams.get("orderby") || "Newest",
-    listingStatus: searchParams.get("listingStatus") || "All",
-    activeStatus: searchParams.get("activeStatus") || "Active",
-    minPriceRange: searchParams.get("minPriceRange") || 0,
-    maxPriceRange: searchParams.get("maxPriceRange") || 100000000,
-    bedrooms: searchParams.get("bedrooms") || 0,
-    bathroms: searchParams.get("bathroms") || 0,
-    propertyAddress: searchParams.get("propertyAddress") || "",
-    address: searchParams.get("address") || "",
-    propertyId: searchParams.get("propertyId") || "",
-    currentSortingOption: searchParams.get("currentSortingOption") || "Newest",
-  });
+  const getParamsObject = () => {
+    let storedObject = sessionStorage.getItem('search')
+    if (storedObject) {
+      storedObject = JSON.parse(storedObject)
+    }
+    const newParamsObject = {
+      itemsPerPage: searchParams.get("itemsPerPage") || storedObject?.itemsPerPage || 10,
+      pageNumber: searchParams.get("pageNumber") || storedObject?.pageNumber || 1,
+      orderby: searchParams.get("orderby") || storedObject?.orderby || "Newest",
+      listingStatus: searchParams.get("listingStatus")||storedObject?.listingStatus || "All",
+      activeStatus: searchParams.get("activeStatus")||storedObject?.activeStatus || "Active",
+      minPriceRange: searchParams.get("minPriceRange")||storedObject?.minPriceRange || 0,
+      maxPriceRange: searchParams.get("maxPriceRange")||storedObject?.maxPriceRange || 0,
+      bedrooms: searchParams.get("bedrooms")||storedObject?.bedrooms || 0,
+      bathroms: searchParams.get("bathroms")||storedObject?.bathroms || 0,
+      propertyAddress: searchParams.get("propertyAddress")||storedObject?.propertyAddress || "",
+      address: searchParams.get("address")||storedObject?.address || "",
+      propertyId: searchParams.get("propertyId")||storedObject?.propertyId || "",
+      currentSortingOption: searchParams.get("currentSortingOption")||storedObject?.currentSortingOption || "Newest",
+    }
+    return newParamsObject
+  };
   const [paramsObject, setParamsObject] = useState(getParamsObject());
 
   const convertParamsObjectToString = (incomingObject = paramsObject) => {

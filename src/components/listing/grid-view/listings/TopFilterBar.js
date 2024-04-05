@@ -15,33 +15,33 @@ const TopFilterBar = ({
   setColstyle,
 }) => {
   const status = [
-    { id: "flexRadioDefault3", label: "Active", defaultChecked: true },
+    { id: "flexRadioDefault0", label: "Active", defaultChecked: true },
     { id: "flexRadioDefault1", label: "Pending" },
     { id: "flexRadioDefault2", label: "Sale" },
     { id: "flexRadioDefault2", label: "Lease" },
   ];
   const parking = [
-    { id: "flexRadioDefault3", label: "1", defaultChecked: true },
+    { id: "flexRadioDefault0", label: "1", defaultChecked: true },
     { id: "flexRadioDefault1", label: "2" },
     { id: "flexRadioDefault2", label: "3" },
     { id: "flexRadioDefault2", label: "4" },
   ];
 
   const garage = [
-    { id: "flexRadioDefault3", label: "1", defaultChecked: true },
+    { id: "flexRadioDefault0", label: "1", defaultChecked: true },
     { id: "flexRadioDefault1", label: "2" },
     { id: "flexRadioDefault2", label: "3" },
     { id: "flexRadioDefault2", label: "4" },
   ];
 
   const building = [
-    { id: "flexRadioDefault3", label: "500", defaultChecked: true },
+    { id: "flexRadioDefault0", label: "500", defaultChecked: true },
     { id: "flexRadioDefault1", label: "1500" },
     { id: "flexRadioDefault2", label: "2500" },
     { id: "flexRadioDefault2", label: "3500" },
   ];
   const year = [
-    { id: "flexRadioDefault3", label: "1986", defaultChecked: true },
+    { id: "flexRadioDefault0", label: "1986", defaultChecked: true },
     { id: "flexRadioDefault1", label: "1990" },
     { id: "flexRadioDefault2", label: "1994" },
     { id: "flexRadioDefault2", label: "1998" },
@@ -51,7 +51,7 @@ const TopFilterBar = ({
     { id: "flexRadioDefault2", label: "2018" },
   ];
   const structure = [
-    { id: "flexRadioDefault3", label: "Townhouse", defaultChecked: true },
+    { id: "flexRadioDefault0", label: "Townhouse", defaultChecked: true },
     { id: "flexRadioDefault1", label: "Townhouse" },
     { id: "flexRadioDefault1", label: "Townhouse" },
     { id: "flexRadioDefault1", label: "Townhouse" },

@@ -14,7 +14,7 @@ import { debounce } from "@/utilis/debounce";
 import { ACTIVE_STATUS, LISTING_STATUS } from "@/utilis/constants";
 import usePropertySearchParams from "@/custom-hooks/usePropertySearchParams";
 import { useAppContext } from "@/custom-hooks/AppContext";
-import ContentLoader from 'react-content-loader'
+import ContentLoader from "react-content-loader";
 export default function PropertyFilteringMapFive({ data }) {
   const router = useRouter();
   const pathName = usePathname();
@@ -52,7 +52,7 @@ export default function PropertyFilteringMapFive({ data }) {
   });
   const [propertyTypes, setPropertyTypes] = useState([]);
 
-  const [priceRange, setPriceRange] = useState([0, 1000000000]);
+  const [priceRange, setPriceRange] = useState([0, 0]);
   const [bedrooms, setBedrooms] = useState(0);
   const [bathroms, setBathroms] = useState(0);
   const [location, setLocation] = useState("All Cities");
@@ -69,7 +69,7 @@ export default function PropertyFilteringMapFive({ data }) {
   const resetFilter = () => {
     // setListingStatus({ value: "All", label: "All" });
     setPropertyTypes([]);
-    setPriceRange([0, 1000000000]);
+    setPriceRange([0, 0]);
     setBedrooms(0);
     setBathroms(0);
     setLocation("All Cities");
@@ -145,8 +145,12 @@ export default function PropertyFilteringMapFive({ data }) {
     }
 
     // Add price range filter
-    filterArray.push(`ListPrice ge ${priceRange[0]}`);
-    filterArray.push(`ListPrice le ${priceRange[1]}`);
+    if (priceRange[0] > 0) {
+      filterArray.push(`ListPrice ge ${priceRange[0]}`);
+    }
+    if (priceRange[0] <= priceRange[1] && priceRange[1] > 0) {
+      filterArray.push(`ListPrice le ${priceRange[1]}`);
+    }
 
     // Add bedrooms filter
     if (bedrooms > 0) {
@@ -256,7 +260,11 @@ export default function PropertyFilteringMapFive({ data }) {
   };
   const handleClickProperty = (listing) => {
     localStorage.setItem("currentUrl", window.location.href);
-    sessionStorage.setItem("search", JSON.stringify(paramsObject));
+
+    sessionStorage.setItem(
+      "search",
+      JSON.stringify({ ...paramsObject, address: searchQuery })
+    );
     setParams({ id: listing.ListingKey, data: listing });
   };
   const handleClickCloseModal = () => {
@@ -265,12 +273,11 @@ export default function PropertyFilteringMapFive({ data }) {
     const newObject = {
       ...paramsObject,
       ...localSearchObject,
-      address: splitPropertyAddress(0),
+      address: searchQuery || splitPropertyAddress(0) || "",
     };
-    const newString = convertParamsObjectToString(newObject);
     // return;
-    router.replace(`${pathName}?${newString}`);
-    setLoading(false)
+    router.replace(`${pathName}?address=${newObject.address}`);
+    setLoading(false);
   };
   const filterFunctions = {
     handlelistingStatus,
@@ -303,11 +310,23 @@ export default function PropertyFilteringMapFive({ data }) {
     handleSearch,
     handleClickProperty,
     setLoading,
-    loading
+    loading,
   };
-
-
-
+  const getSearchFromStates = () => {
+    return {
+      itemsPerPage,
+      pageNumber,
+      orderby: currentSortingOption,
+      listingStatus: listingStatus?.value,
+      activeStatus: activeStatus?.value,
+      minPriceRange: priceRange[0],
+      maxPriceRange: priceRange[1],
+      bedrooms,
+      bathroms,
+      address: searchQuery,
+      currentSortingOption,
+    };
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -316,13 +335,15 @@ export default function PropertyFilteringMapFive({ data }) {
 
         apiUrl += getFilterStringForApi();
 
-        if (
-          !params.id &&
-          !paramsObject?.propertyId &&
-          !paramsObject?.propertyAddress
-        ) {
-          getFilterStringForParams(); // Moved outside the fetchData function
-        }
+        // if (
+        //   !params.id &&
+        //   !paramsObject?.propertyId &&
+        //   !paramsObject?.propertyAddress
+        // ) {
+
+        //   getFilterStringForParams(); // Moved outside the fetchData function
+        // }
+
         const response = await axios.get(apiUrl, {
           headers: {
             Authorization: "Bearer 23c8729a55e9986ae45ca71d18a3742c",
@@ -343,6 +364,11 @@ export default function PropertyFilteringMapFive({ data }) {
         // Add UI feedback for the user
       }
     };
+    sessionStorage.setItem("search", JSON.stringify(getSearchFromStates()));
+    if (searchQuery != paramsObject?.address) {
+      router.replace(`/properties?address=${searchQuery}`);
+    }
+
     debounce(fetchData, 500);
     // fetchData();
   }, [
@@ -416,12 +442,11 @@ export default function PropertyFilteringMapFive({ data }) {
     }
   }, [filteredData, currentSortingOption]);
 
-  const handleSavedSarch = () => {
+  const handleSavedSarchToState = () => {
     let newSavedSearch = {};
 
     conversionList.map((key) => {
-      const search = paramsObject[key];
-      newSavedSearch[key] = search;
+      newSavedSearch[key] = paramsObject[key];
     });
 
     setItemsPerPage(newSavedSearch.itemsPerPage);
@@ -436,7 +461,10 @@ export default function PropertyFilteringMapFive({ data }) {
         (option) => option.value === newSavedSearch.activeStatus
       )
     );
-    setPriceRange([newSavedSearch.minPriceRange, newSavedSearch.maxPriceRange]);
+    setPriceRange([
+      Number(newSavedSearch.minPriceRange),
+      Number(newSavedSearch.maxPriceRange),
+    ]);
     setBedrooms(newSavedSearch.bedrooms);
     setBathroms(newSavedSearch.bathroms);
     setSearchQuery(newSavedSearch.address);
@@ -446,19 +474,24 @@ export default function PropertyFilteringMapFive({ data }) {
   // first time when components mount
   useEffect(() => {
     const { propertyId, address } = paramsObject;
+    handleSavedSarchToState();
+    sessionStorage.setItem("search", JSON.stringify(paramsObject));
     const newPropertyId = propertyId || splitPropertyAddress(1);
     const newAddress = address || splitPropertyAddress(0) || "";
+
     if (newAddress) {
       setSearchQuery(newAddress);
     }
     if (newPropertyId) {
-      sessionStorage.setItem("search", JSON.stringify(paramsObject));
       setParams({ id: newPropertyId });
       return;
     }
 
     // handle search
-    handleSavedSarch();
+
+    if (newAddress) {
+      router.replace(`/properties?address=${newAddress}`);
+    }
   }, []);
 
   // when modal open
@@ -468,7 +501,6 @@ export default function PropertyFilteringMapFive({ data }) {
       return;
     }
   }, [params]);
-  console.log(loading)
   return (
     <>
       <PropertyDetailModal
@@ -522,14 +554,18 @@ export default function PropertyFilteringMapFive({ data }) {
               className="col-xl-6 overflow-hidden position-relative"
             >
               <div className="half_map_area map-canvas half_style">
-                {pageItems && <ListingMap1 listings={pageItems ?? []} handleClickProperty={handleClickProperty}/>}
+                {pageItems && (
+                  <ListingMap1
+                    listings={pageItems ?? []}
+                    handleClickProperty={handleClickProperty}
+                  />
+                )}
               </div>
             </div>
             {/* End col-7 */}
 
             <div className="col-xl-6">
               <div className="half_map_area_content mt30 p0 p-md-3">
-                
                 <div className="row align-items-center mb10">
                   <TopFilterBar
                     pageContentTrac={pageContentTrac}
@@ -543,27 +579,58 @@ export default function PropertyFilteringMapFive({ data }) {
                   />
                 </div>
                 <div className="row">
-                  {
-                    loading ? (
-                      [...Array(10)].map((_, index) => (
-                        <div className="col-md-6" key={index}>
-                          <ContentLoader viewBox="0 0 500 280" speed={1} backgroundColor="#cccccc" foregroundColor="#a1a1a1">
-                            <rect x="3" y="3" rx="10" ry="10" width="100%" height="180" />
-                            <rect x="6" y="190" rx="0" ry="0" width="80%" height="20" />
-                            <rect x="4" y="215" rx="0" ry="0" width="75%" height="20" />
-                            <rect x="4" y="242" rx="0" ry="0" width="90%" height="20" />
-                          </ContentLoader>
-                        </div>
-                      ))
-                    ) : (
-                      <FeaturedListings
-                        colstyle={colstyle}
-                        listings={pageItems}
-                        handleClickProperty={handleClickProperty}
-                        loading={loading}
-                      />
-                    )
-                  } 
+                  {loading ? (
+                    [...Array(10)].map((_, index) => (
+                      <div className="col-md-6" key={index}>
+                        <ContentLoader
+                          viewBox="0 0 500 280"
+                          speed={1}
+                          backgroundColor="#cccccc"
+                          foregroundColor="#a1a1a1"
+                        >
+                          <rect
+                            x="3"
+                            y="3"
+                            rx="10"
+                            ry="10"
+                            width="100%"
+                            height="180"
+                          />
+                          <rect
+                            x="6"
+                            y="190"
+                            rx="0"
+                            ry="0"
+                            width="80%"
+                            height="20"
+                          />
+                          <rect
+                            x="4"
+                            y="215"
+                            rx="0"
+                            ry="0"
+                            width="75%"
+                            height="20"
+                          />
+                          <rect
+                            x="4"
+                            y="242"
+                            rx="0"
+                            ry="0"
+                            width="90%"
+                            height="20"
+                          />
+                        </ContentLoader>
+                      </div>
+                    ))
+                  ) : (
+                    <FeaturedListings
+                      colstyle={colstyle}
+                      listings={pageItems}
+                      handleClickProperty={handleClickProperty}
+                      loading={loading}
+                    />
+                  )}
                 </div>
                 {/* End .row */}
 

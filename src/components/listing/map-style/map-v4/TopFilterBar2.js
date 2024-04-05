@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PriceRange from "../../sidebar/PriceRange";
 import Bedroom from "../../sidebar/Bedroom";
 import Bathroom from "../../sidebar/Bathroom";
@@ -19,8 +19,8 @@ import { RotatingLines } from 'react-loader-spinner';
 
 const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCurrentSortingOption, handleClickProperty }) => {
   const options = [
-    { id: "flexRadioDefault3", label: "All", value: "All"},
-    { id: "flexRadioDefault1", label: "Active", value: "Active", defaultChecked: true},
+    { id: "flexRadioDefault0", label: "All", value: "All" },
+    { id: "flexRadioDefault1", label: "Active", value: "Active", defaultChecked: true },
     { id: "flexRadioDefault2", label: "Active Under Contract", value: "Active Under Contract" },
     { id: "flexRadioDefault3", label: "Canceled", value: "Canceled" },
     { id: "flexRadioDefault4", label: "Closed", value: "Closed" },
@@ -28,20 +28,20 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
     { id: "flexRadioDefault6", label: "Pending", value: "Pending" },
     { id: "flexRadioDefault7", label: "Withdrawn", value: "Withdrawn" },
   ];
-    const customStyles = {
-      option: (styles, { isFocused, isSelected, isHovered }) => {
-        return {
-          ...styles,
-          backgroundColor: isSelected
-            ? "#0076ff"
-            : isHovered
+  const customStyles = {
+    option: (styles, { isFocused, isSelected, isHovered }) => {
+      return {
+        ...styles,
+        backgroundColor: isSelected
+          ? "#0076ff"
+          : isHovered
             ? "#0076ff12"
             : isFocused
-            ? "#0076ff12"
-            : undefined,
-        };
-      },
-    };
+              ? "#0076ff12"
+              : undefined,
+      };
+    },
+  };
   const [isMobile, setIsMobile] = useState(false); // State to determine if user is on mobile
   const [showModal, setShowModal] = useState(false);
   const searchInputRef = useRef(null);
@@ -64,7 +64,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       enqueueSnackbar(response.message, { variant: "error" });
     }
   };
-    useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // Adjust the breakpoint as needed
     };
@@ -72,10 +72,10 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-    }, []);
-    const showSearchModal = () => {
-      setShowModal(true);
-    }
+  }, []);
+  const showSearchModal = () => {
+    setShowModal(true);
+  }
   const handleTabClick = (tab) => {
     filterFunctions.setLoading(true);
     filterFunctions.setListingStatus(tab);
@@ -271,7 +271,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
           <>
             <div className="d-flex property-search">
               <form className="position-relative w-100" onSubmit={handleSubmit}>
-                <input type="text" className="form-control" value={searchTerm} onChange={handleInputChange}/>
+                <input type="text" className="form-control" value={searchTerm} onChange={handleInputChange} />
               </form>
               {showSuggestions && cities.length > 0 && (
                 <ul className="search-suggestion">
@@ -304,20 +304,20 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                   getFilterString={getFilterString}
                   filterFunctions={filterFunctions}
                 />
-                
+
                 <div className="pcs_dropdown d-flex align-items-center justify-content-end">
-                    <i class="fa-solid fa-arrow-down-short-wide"></i>
-                    <select className="form-select"  onChange={(e)=>setCurrentSortingOption && setCurrentSortingOption(e.target.value)}>
-                      <option>Newest</option>
-                      <option>Oldest</option>
-                      <option>Price Low</option>
-                      <option>Price High</option>
-                    </select>
-                  </div>
+                  <i class="fa-solid fa-arrow-down-short-wide"></i>
+                  <select className="form-select" onChange={(e) => setCurrentSortingOption && setCurrentSortingOption(e.target.value)}>
+                    <option>Newest</option>
+                    <option>Oldest</option>
+                    <option>Price Low</option>
+                    <option>Price High</option>
+                  </select>
+                </div>
               </div>
             </div>
           </>
-        ): (
+        ) : (
           <>
             <div className="row">
               <div className="col-8 col-md-4">
@@ -399,7 +399,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                   >
                     Price <i className="fa fa-angle-down ms-2" />
                   </button>
-      
+
                   <div className="dropdown-menu dd3">
                     <div className="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
                       <h6 className="list-title">Price Range</h6>
@@ -434,7 +434,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                         <Bedroom filterFunctions={filterFunctions} />
                       </div>
                     </div>
-      
+
                     <div className="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
                       <h6 className="list-title">Bathrooms</h6>
                       <div className="d-flex">
@@ -451,10 +451,22 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                     </div>
                   </div>
                 </li>
+                <li className="list-inline-item">
+                  <button
+                  onClick={filterFunctions?.resetFilter}
+                    id="demo-positioned-button"
+                    aria-haspopup="true"
+                    type="button"
+                    className="open-btn mb15"
+                  >
+                    <i class="fa-solid fa-rotate-right"></i>
+                  </button>
+                </li>
                 <SaveSearchMenu
                   handleSaveSearch={handleSaveSearch}
                   getFilterString={getFilterString}
                 />
+
               </div>
               <div className="col-4 col-md-2 d-md-none ps-1">
                 <li className="list-inline-item">
@@ -469,7 +481,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                 </li>
               </div>
               {/* End li Price */}
-      
+
               {/* End bed and bathroom check */}
             </div>
           </>
@@ -479,11 +491,11 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
         <div className="search-popup">
           <form autoComplete="off">
             <div className={`search-header justify-content-start ${isMobile ? 'sticky-header' : ''}`}>
-                <button onClick={() => setShowModal(false)}>
-                  <i className="fa-solid fa-chevron-left"></i>
+              <button onClick={() => setShowModal(false)}>
+                <i className="fa-solid fa-chevron-left"></i>
               </button>
               <h1 className="fs-5 mb0">Filters</h1>
-                {/* <input
+              {/* <input
                   className="form-control "
                   type="text"
                   name="search"
@@ -502,15 +514,15 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
             <div className="container mt75">
               <div className="radio-group">
                 <input type="radio" id="option-one" name="selector" onClick={() => handleTabClick(LISTING_STATUS[0])} checked={filterFunctions.listingStatus.value === LISTING_STATUS[0]?.value} /><label htmlFor="option-one">{LISTING_STATUS[0]?.label}</label>
-                <input type="radio" id="option-two" name="selector" onClick={() => handleTabClick(LISTING_STATUS[1])}  checked={filterFunctions.listingStatus.value === LISTING_STATUS[1]?.value}/><label htmlFor="option-two">{LISTING_STATUS[1]?.label}</label>
-                <input type="radio" id="option-three" name="selector" onClick={() => handleTabClick(LISTING_STATUS[2])}  checked={filterFunctions.listingStatus.value === LISTING_STATUS[2]?.value}/><label htmlFor="option-three">{LISTING_STATUS[2]?.label}</label>
+                <input type="radio" id="option-two" name="selector" onClick={() => handleTabClick(LISTING_STATUS[1])} checked={filterFunctions.listingStatus.value === LISTING_STATUS[1]?.value} /><label htmlFor="option-two">{LISTING_STATUS[1]?.label}</label>
+                <input type="radio" id="option-three" name="selector" onClick={() => handleTabClick(LISTING_STATUS[2])} checked={filterFunctions.listingStatus.value === LISTING_STATUS[2]?.value} /><label htmlFor="option-three">{LISTING_STATUS[2]?.label}</label>
               </div>
               {/* <button id="showMoreFilters">
                 Show more filters
               </button> */}
               <div className="filters mt15">
                 <PriceRange filterFunctions={filterFunctions} />
-                
+
                 <div className="mt15">
                   <h6 className="list-title">Listing Status</h6>
                   <Select
@@ -537,10 +549,10 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                     <Bathroom filterFunctions={filterFunctions} />
                   </div>
                 </div>
-  
+
               </div>
               <div className="filter-button d-block mt-3">
-                <button type='button' className="result-btn" onClick={() => setShowModal(false)} disabled={filterFunctions.loading? true : false}>
+                <button type='button' className="result-btn" onClick={() => setShowModal(false)} disabled={filterFunctions.loading ? true : false}>
                   See {
                     filterFunctions.loading ? (
                       <RotatingLines visible={true}
@@ -554,14 +566,14 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                         wrapperStyle={{}}
                         wrapperClass=""
                       />
-                    ): propertyCount 
+                    ) : propertyCount
                   } results
                 </button>
               </div>
             </div>
           </form>
         </div>
-      ): null}
+      ) : null}
     </>
   );
 };
