@@ -177,10 +177,10 @@ const HomeValueChart = ({ page_data }) => {
           <Area
             type="duotone"
             dataKey="adjustedPrice"
-            stroke="#f9a347"
+            stroke="#17B036"
             fill="#fff"
-            strokeWidth={3}
-            dot={{ stroke: '#f9a347', fill: '#fff', strokeWidth: 2, r: 5 }}
+            strokeWidth={5}
+            // dot={{ stroke: '#f9a347', fill: '#fff', strokeWidth: 2, r: 5 }}
           />
         </AreaChart>
       </ResponsiveContainer>
