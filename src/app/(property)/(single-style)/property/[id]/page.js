@@ -181,7 +181,7 @@ const SingleV2 = ({ params }) => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Home Value</h4>
                 <div className="row">
-                  <HomeValueChart />
+                  <HomeValueChart page_data={data} />
                 </div>
               </div>
               {/* End .ps-widget */}
