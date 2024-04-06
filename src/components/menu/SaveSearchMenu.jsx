@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { enqueueSnackbar } from "notistack";
-import { Popover } from "@mui/material";
+import { Box, Popover } from "@mui/material";
 
-export default function SaveSearchMenu({ handleSaveSearch, getFilterString, filterFunctions }) {
+export default function SaveSearchMenu({
+  handleSaveSearch,
+  getFilterString,
+  filterFunctions,
+}) {
   console.log(filterFunctions);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -36,38 +40,45 @@ export default function SaveSearchMenu({ handleSaveSearch, getFilterString, filt
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  useEffect(() => {
+    setInputs({
+      name: `Homes for ${filterFunctions?.listingStatus.label} in ${filterFunctions?.searchQuery}`,
+    });
+  }, [filterFunctions]);
+
   return (
     <div>
-      {
-        isMobile ? (
-          <>
-            <button className="btn-save-search mt-1" id="demo-positioned-button"
-                  aria-controls={open ? "" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  type="button">
-              <i className="fa-solid fa-file-export mr5"></i>Save Search
+      {isMobile ? (
+        <>
+          <button
+            className="btn-save-search mt-1"
+            id="demo-positioned-button"
+            aria-controls={open ? "" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            type="button"
+          >
+            <i className="fa-solid fa-file-export mr5"></i>Save Search
+          </button>
+        </>
+      ) : (
+        <>
+          <li className="list-inline-item">
+            <button
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              type="button"
+              className="open-btn mb15"
+            >
+              Save
             </button>
-          </>
-        ) : (
-            <>
-              <li className="list-inline-item">
-                <button
-                  id="demo-positioned-button"
-                  aria-controls={open ? "demo-positioned-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  type="button"
-                  className="open-btn mb15"
-                >
-                  Save
-                </button>
-              </li>
-            </>
-        )
-      }
+          </li>
+        </>
+      )}
 
       {/* <Button>Dashboard</Button> */}
       <Popover
@@ -75,8 +86,8 @@ export default function SaveSearchMenu({ handleSaveSearch, getFilterString, filt
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "center",
         }}
         PaperProps={{
           elevation: 10,
@@ -106,7 +117,7 @@ export default function SaveSearchMenu({ handleSaveSearch, getFilterString, filt
           horizontal: "right",
         }}
       >
-        <div className="" style={{ 'width': 350 }}>
+        <Box style={{ minWidth: 250, width:'100%',maxWidth:350 }}>
           <div className="d-flex mb15 align-items-center justify-content-between">
             <h5 className="mt10">Save Search</h5>
             <span onClick={handleCopy} style={{ cursor: "pointer" }}>
@@ -136,7 +147,7 @@ export default function SaveSearchMenu({ handleSaveSearch, getFilterString, filt
               </button>
             </div>
           </form>
-        </div>
+        </Box>
       </Popover>
     </div>
   );

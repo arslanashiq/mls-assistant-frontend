@@ -465,6 +465,8 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                 <SaveSearchMenu
                   handleSaveSearch={handleSaveSearch}
                   getFilterString={getFilterString}
+                  filterFunctions={filterFunctions}
+
                 />
 
               </div>
