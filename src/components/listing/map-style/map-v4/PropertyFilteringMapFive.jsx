@@ -547,24 +547,11 @@ export default function PropertyFilteringMapFive({ data }) {
 
       {/* Property Filtering */}
       <section className="p-0 bgc-f7">
-        <div className="container-fluid">
+        <div className="container">
           <div className="row" data-aos="fade-up" data-aos-duration="200">
-            <div
-              id="propertListing"
-              className="col-xl-6 overflow-hidden position-relative"
-            >
-              <div className="half_map_area map-canvas half_style">
-                {pageItems && (
-                  <ListingMap1
-                    listings={pageItems ?? []}
-                    handleClickProperty={handleClickProperty}
-                  />
-                )}
-              </div>
-            </div>
             {/* End col-7 */}
 
-            <div className="col-xl-6">
+            <div className="col-xl-12">
               <div className="half_map_area_content mt30 p0 p-md-3">
                 <div className="row align-items-center mb10">
                   <TopFilterBar

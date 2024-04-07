@@ -29,64 +29,53 @@ const Header = () => {
 
   return (
     <>
-      <header
-        className={`header-nav nav-homepage-style at-home2  main-menu ${
-          navbar ? "sticky slideInDown animated" : ""
-        }`}
-      >
-        <nav className="posr">
-          <div className="container posr">
-            <div className="row align-items-center justify-content-between">
-              <div className="col-auto">
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="logos mr40">
-                    <Link className="header-logo logo1" href="/">
-                      <img
-                        src="/images/mls-assistant-white.png"
-                        alt="MLS Assistant"
-                      />
-                    </Link>
-                    <Link className="header-logo logo2" href="/">
-                      <img
-                        src="/images/mls-assistant.png"
-                        alt="MLS Assistant"
-                      />
-                    </Link>
-                  </div>
-                  {/* End Logo */}
+      <nav className='navbar navbar-expand-md navbar-dark theme bgColor lightFontColor'>
+        <Link className="navbar-brand" href="/">
+          <img
+            src="/images/mls-assistant-white.png"
+            alt="MLS Assistant"
+            width={'70px'}
+          />
+        </Link>
+        <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation'>
+          <span className='navbar-toggle-icon'></span>
+          <span className='navbar-toggle-icon'></span>
+          <span className='navbar-toggle-icon'></span>
+        </button>
 
-                  {/* End Main Menu */}
-                </div>
-              </div>
-              {/* End .col-auto */}
+        <div className='collapse navbar-collapse' id='navbarCollapse'>
+          <ul className='navbar-nav mr-auto'>
+            <li className='nav-item active'>
+              <Link href={`/`} className='nav-link'>
+                  Home
+              </Link>
+            </li>
+            <li className='nav-item active'>
+              <Link href={`/properties`} className='nav-link'>
+                Properties
+              </Link>
+            </li>
+          </ul>
 
-              <div className="col-auto">
-                <div className="d-flex align-items-center">
-                  <MainMenu />
-                  {!isLoggedIn ? (
-                    <a
-                      href="#"
-                      className="login-info d-flex align-items-center"
-                      role="button"
-                      onClick={handleOpenLoginModal}
-                    >
-                      <i className="far fa-user-circle fs-5 me-2" />
-                      Login
-                    </a>
-                  ) : null}
-
-                  {isLoggedIn && <DashbaordHeaderProfile />}
-                </div>
-              </div>
-              {/* End .col-auto */}
-            </div>
-            {/* End .row */}
-          </div>
-        </nav>
-      </header>
-      {/* End Header */}
-
-      {/* Signup Modal */}
+          <ul className='navbar-nav ml-auto'>
+            <li className='nav-item'>
+              {!isLoggedIn ? (
+                <a href="#" className="login-info d-flex align-items-center nav-link" role="button" onClick={handleOpenLoginModal}>
+                  <i className="far fa-user-circle fs-5 me-2" /> Login
+                </a>
+              ) : null}
+            </li>
+            <li className='nav-item'>
+              {!isLoggedIn ? (
+                <a href="#" className="sign-up nav-link" role="button" onClick={handleOpenLoginModal}>
+                  Sign Up
+                </a>
+              ) : null}
+            </li>
+            <li className='nav-item active'>{isLoggedIn && <DashbaordHeaderProfile />}</li>
+          </ul>
+        </div>
+      </nav>
       <div className="signup-modal">
         <div
           className="modal fade"
@@ -100,18 +89,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {/* End Signup Modal */}
-
-      {/* DesktopSidebarMenu */}
-      <div
-        className="offcanvas offcanvas-end"
-        tabIndex="-1"
-        id="SidebarPanel"
-        aria-labelledby="SidebarPanelLabel"
-      >
-        <SidebarPanel />
-      </div>
-      {/* Sidebar Panel End */}
     </>
   );
 };

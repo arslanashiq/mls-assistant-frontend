@@ -3,6 +3,8 @@ import React from "react";
 import Footer from "@/components/common/default-footer";
 import Cta from "@/components/home/home-v2/Cta";
 import dynamic from 'next/dynamic';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import 'swiper/css';
 
 const Explore = dynamic(() => import('@/components/home/home-v2/Explore'));
 const Header = dynamic(() => import('@/components/home/home-v2/Header'));
@@ -17,49 +19,51 @@ const Home_V2 = () => {
   return (
     <>
       <Header />
-      <MobileMenu />
-      <section className="home-banner-style2 p0">
-        <div className="home-style2">
-          <div className="container maxw1600">
-            <div className="row">
-              <div className="col-xl-10 mx-auto">
-                <Hero />
-              </div>
+      <div className='swiper-container'>
+        <div className='swiper-wrapper'>
+          <div className='swiper-slide' style={{backgroundImage: 'url("/images/stock-photo-1.jpg")', height: '500px'}}></div>
+          <div className='swiper-slide' style={{backgroundImage: 'url("/images/stock-photo-4.jpg")', height: '500px'}}></div>
+          <div className='swiper-slide' style={{backgroundImage: 'url("/images/stock-photo-5.jpg")', height: '500px'}}></div>
+        </div>
+        <div className='swiper-content static'>
+          <div className='container'>
+            <div className='copy theme lightFontColor'>
+              <h1>The path to success starts here.</h1>
+              <p>Starter is a premium real estate template designed to meet your needs.</p>
             </div>
           </div>
         </div>
-      </section>
-      <section className="pt-5">
-        <div className="how-we-help position-relative mx-auto bgc-thm-light maxw1600 pt120 pt60-md pb90 pb30-md bdrs12 mx20-lg">
-          <div className="container">
-            <div className="row">
-              <div
-                className="col-lg-6 m-auto wow fadeInUp"
-                data-wow-delay="300ms"
-              >
-                <div className="main-title text-center">
-                  <h2 className="title">See How MLS Assistant Can Help</h2>
-                  <p className="paragraph">
-                    Unlock the full potential of your real estate journey with
-                    Loretta, our advanced AI MLS assistant. Loretta is designed
-                    to revolutionize the way you navigate the market, offering
-                    unparalleled efficiency and insight every step of the way.
-                  </p>
+      </div>
+      <Hero />
+      
+
+      <div className='featured properties'>
+        <div className='container'>
+          <div className='headline'>
+            <h2>Featured Listings</h2>
+          </div>
+          <div className='row'>
+            <div className="property col-sm-12 col-md-6">
+              <a href='single.html'>
+                <div className='photo' style={{backgroundImage: 'url("/images/stock-photo-1.jpg")'}}>
+
+                  <div className='mask'>
+                    <div className='head'>
+                      <div className='tag mr-auto theme darkFontColor'>Featured</div>
+                      <div className='price ml-auto theme lightFontColor'>$1,525,000</div>
+                    </div>
+                    <div className='body'></div>
+                    <div className='foot'>
+                      <div className='address'>10 Nantasket Ave. Boston, MA</div>
+                      <div className='remarks'><p>Spectacular high end renovation in the heart of Brighton.</p></div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="row">
-              <Explore />
+              </a>
             </div>
           </div>
         </div>
-      </section>
-      <section className="about-us">
-        <div className="container">
-          <About />
-        </div>
-      </section>
-      <Cta />
+      </div>
       <section className="footer-style1 at-home2 pb-0">
         <Footer />
       </section>

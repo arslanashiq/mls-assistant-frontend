@@ -16,11 +16,6 @@ const MapV4 = () => {
     <>
       {/* Main Header Nav */}
       <DefaultHeader />
-      {/* End Main Header Nav */}
-
-      {/* Mobile Nav  */}
-      <MobileMenu />
-      {/* End Mobile Nav  */}
       <PropertyFilteringMapFive/>
       {/* Property Filtering */}
       {/* Start Our Footer */}

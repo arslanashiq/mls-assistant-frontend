@@ -187,72 +187,48 @@ const HeroContent = () => {
   }, [showModal]);
   return (
     <>
-      <div className="mx-auto" data-aos="fade-up">
-        <div className="tab-content">
-          <div className="advance-content-style2">
-            <div className="row align-items-center justify-content-start justify-content-md-center">
-              <div className="col-lg-8">
-                <div className="advance-search-field position-relative text-start">
-                  <h2 className="text-center text-white text-uppercase fs-md-5 fs-3">Find a home in a neighborhood you love.</h2>
-                  {
-                    isMobile ? (
-                        <form className="form-search position-relative" autoComplete="off" >
-                          <div className="box-search">
-                            <input className="form-control " type="text" name="search" placeholder={`Search by City, State & Zipcode... `} onClick={showSearchModal}/>
-                          </div>
-                          <span className="advance-search-icon" onClick={showSearchModal}>
-                            <i className="fa-solid fa-magnifying-glass"></i>
-                            <span className="d-none">
-                              Search
-                            </span>
-                          </span>
-                        </form>
-                    )
-                      : (
-                        <form
-                          className="form-search position-relative"
-                          autoComplete="off"
-                          onSubmit={handleSubmit}
+    <main className='index' role='main'>
+      <div className='searchbar-index'>
+        <form id='searchbar' onSubmit={handleSubmit}>
+          <div className='container'>
+            <div className='searchbar'>
+              <div className='form'>
+                <div className='fields' id='typeahead'>
+                  <input type='text' className='query typeahead' placeholder='Address, City, or Zip' value={searchTerm} onChange={handleInputChange}/>
+                  <select className='type'>
+                    <option value='1'>Buy</option>
+                    <option value='2'>Rent</option>
+                  </select>
+                  <button className='button theme bgColor lightFontColor'>
+                    <span className='label'>Search</span>
+                    <i className='glass ion-ios-search-strong'></i>
+                  </button>
+                  </div>
+                  {showSuggestions && cities.length > 0 && (
+                    <ul className="search-suggestion">
+                      {cities.map((city, index) => (
+                        <li
+                          key={index}
+                          onClick={(e) =>
+                            handleSuggestionClick(city, e)
+                          }
                         >
-                          <div className="box-search">
-                            <input
-                              className="form-control "
-                              type="text"
-                              name="search"
-                              placeholder={`Search by City, State & Zipcode... `}
-                              value={searchTerm}
-                              onChange={handleInputChange}
-                            />
-                          </div>
-                          {showSuggestions && cities.length > 0 && (
-                            <ul className="search-suggestion">
-                              {cities.map((city, index) => (
-                                <li
-                                  key={index}
-                                  onClick={(e) =>
-                                    handleSuggestionClick(city, e)
-                                  }
-                                >
-                                  {city.name}
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                          <button className="advance-search-icon" type="submit">
-                            <i className="fa-solid fa-magnifying-glass"></i>
-                            <span className="d-none">
-                              Search
-                            </span>
-                          </button>
-                        </form>
-                      )
-                  }
+                          {city.name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                <div className='powered-by'>
+                  <a href='http://ULTRAMLS.com'>
+                    Powered by <strong className='theme bgColor lightFontColor'>ULTRAMLS &trade;</strong>
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
+    </main>
       {showModal ? (
         <div className="search-popup">
           <form autoComplete="off" onSubmit={handleSubmit}>

@@ -1,0 +1,11 @@
+.theme.bgColor         { background-color: slateblue; }
+.theme.borderColor     { border-color: slateblue }
+.theme.fontColor       { color: slateblue }
+.theme.bgColorInverted { background-color: white }
+.theme.lightFontColor  { color: white }
+.theme.mediumFontColor { color: rgba(255,255,255,.6) }
+.theme.darkFontColor   { color: black }
+.theme.linkColor a     { color: white }
+.br1{
+    border-right: 1px solid white;
+}
