@@ -16,13 +16,11 @@ const TopFilterBar = ({ setCurrentSortingOption, colstyle, setColstyle, pageCont
     <>
       {
         isMobile ? (
-          <div>
-            <h6 className="mb-1 text-md-start text-start">
-              {filterFunctions.listingStatus.value !== "All" ? (
-                `${filterFunctions.searchQuery ? `${filterFunctions.searchQuery} Homes for ${filterFunctions.listingStatus.label === "Buy" ? "Sale" : filterFunctions.listingStatus.label}` : ""}`
-              ) : ("You are viewing all properties")}
-            </h6>
-          </div>
+          <h6 className="mb-1 text-md-start text-start">
+            {filterFunctions.listingStatus.value !== "All" ? (
+              `${filterFunctions.searchQuery ? `${filterFunctions.searchQuery} Homes for ${filterFunctions.listingStatus.label === "Buy" ? "Sale" : filterFunctions.listingStatus.label}` : ""}`
+            ) : ("You are viewing all properties")}
+          </h6>
         ) : (
             <>
               <h4 className="mb-1 text-md-start text-center">

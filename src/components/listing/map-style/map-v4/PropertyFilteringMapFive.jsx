@@ -553,7 +553,7 @@ export default function PropertyFilteringMapFive({ data }) {
 
             <div className="col-xl-12">
               <div className="half_map_area_content mt30 p0 p-md-3">
-                <div className="row align-items-center mb10">
+                <div className="row align-items-center pl-1 mb10">
                   <TopFilterBar
                     pageContentTrac={pageContentTrac}
                     colstyle={colstyle}
