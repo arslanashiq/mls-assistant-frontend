@@ -108,6 +108,7 @@ const FeaturedListings = () => {
       {/* End .col for navigation  */}
     </>
   );
+
 };
 
 export default FeaturedListings;
