@@ -117,7 +117,7 @@ export default function SaveSearchMenu({
           horizontal: "right",
         }}
       >
-        <Box style={{ minWidth: 250, width:'100%',maxWidth:350,  padding: 20, }}>
+        <Box style={{ width:'300', paddingLeft: 20, paddingRight: 20, }}>
           <div className="d-flex mb15 align-items-center justify-content-between">
             <h5 className="mt10">Save Search</h5>
             <span onClick={handleCopy} style={{ cursor: "pointer" }}>
