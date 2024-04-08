@@ -18,7 +18,7 @@ import { googleKey } from "../../config/config";
 import AppContext from "@/custom-hooks/AppContext";
 import LoginModal from "@/components/modal/LoginModal";
 import EmailVerificationModal from "@/components/modal/EmailVerificationModal";
-
+import domainsData from "../data/domains.json"
 if (typeof window !== "undefined") {
   import("bootstrap");
 }
@@ -63,7 +63,18 @@ export default function RootLayout({ children }) {
     // Append jQuery script to the document body
     document.body.appendChild(jqueryScript);
   }, []);
-
+  function checkDomainAvailability(domain) {
+    return domainsData.domains.some(item => item.domain === domain);
+  }
+  useEffect(() => {
+    const currentDomain = window.location.hostname;
+    const isDomainAvailable = checkDomainAvailability(currentDomain);
+    if (isDomainAvailable) {
+      console.log("showing data for domain available:", currentDomain);
+    } else {
+      console.log("Domain not available:", currentDomain);
+    }
+  }, []);
   return (
     <html lang="en">
       <body
