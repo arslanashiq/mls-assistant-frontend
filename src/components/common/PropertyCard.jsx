@@ -69,14 +69,23 @@ function PropertyCard({ listing, handleClickProperty = () => {} }) {
       </div> */}
       <div className="listing-style1 mb-4">
         <div className="list-thumb">
-          <Image
-            width={382}
-            height={248}
-            className="w-100 h-100 cover"
-            src={listing.Media[0].MediaURL}
-            alt="listings"
-            onClick={() => handleClickProperty(listing)}
-          />
+          {listing?.Media && listing.Media.length > 0 ? (
+            <Image
+              width={382}
+              height={248}
+              className="w-100 h-100 cover"
+              src={listing.Media[0]?.MediaURL}
+              alt="listings"
+              onClick={() => handleClickProperty(listing)}
+            />
+          ) : (
+            <img
+              src="https://placehold.co/600x400" // Replace this with the path to your placeholder image
+              alt="Placeholder"
+              className="w-100 h-100 cover"
+              onClick={() => handleClickProperty(listing)}
+            />
+          )}
           <div className="sale-sticker-wrap">
             <div className="list-tag fz12">
               <span className="flaticon-electricity me-2" />

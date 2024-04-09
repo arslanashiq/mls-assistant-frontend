@@ -1288,6 +1288,10 @@ li {
     height: 200px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    &.property-page{
+        width: 600px;
+        height: auto;
+    }
     &::-webkit-scrollbar {
         display: none;
     }
@@ -1304,6 +1308,7 @@ li {
             background-color: #d2d2d2;
         }
     }
+
 }
 @media (max-width: 767.98px) {
     .search-suggestion{
@@ -1312,6 +1317,10 @@ li {
         z-index: 1;
         top: 50px;
         height: auto;
+        &.property-page{
+            width: 350px;
+            height: auto;
+        }
     }
 }
 

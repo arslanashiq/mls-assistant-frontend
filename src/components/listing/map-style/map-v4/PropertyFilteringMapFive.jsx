@@ -15,11 +15,17 @@ import { ACTIVE_STATUS, LISTING_STATUS } from "@/utilis/constants";
 import usePropertySearchParams from "@/custom-hooks/usePropertySearchParams";
 import { useAppContext } from "@/custom-hooks/AppContext";
 import ContentLoader from "react-content-loader";
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 export default function PropertyFilteringMapFive({ data }) {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const { getPropertyAddress } = useAppContext();
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [allData, setAllData] = useState([]);
+  const [totalItemsLoaded, setTotalItemsLoaded] = useState(0);
 
   const {
     paramsObject,
@@ -28,7 +34,6 @@ export default function PropertyFilteringMapFive({ data }) {
     convertParamsObjectToString,
   } = usePropertySearchParams();
 
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   const [filteredData, setFilteredData] = useState([]);
   const [params, setParams] = useState({ id: null });
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
@@ -38,13 +43,9 @@ export default function PropertyFilteringMapFive({ data }) {
   const [pageItems, setPageItems] = useState([]);
   const [pageContentTrac, setPageContentTrac] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
   const [listingStatus, setListingStatus] = useState({
     value: "All",
@@ -127,8 +128,7 @@ export default function PropertyFilteringMapFive({ data }) {
     return `${newString}&savedSearch=1`;
   };
   const getFilterStringForApi = () => {
-    let filterString = `?$top=${itemsPerPage}&$skip=${(pageNumber - 1) *
-      itemsPerPage}`;
+    let filterString = `?$top=${itemsPerPage}&$skip=${totalItemsLoaded}`;
 
     let orderBy = "";
 
@@ -184,8 +184,8 @@ export default function PropertyFilteringMapFive({ data }) {
     } else if (currentSortingOption === "Price Low") {
       setLoading(true);
       orderBy = "ListPrice asc";
-    } else if (currentSortingOption === "Price High") {
       setLoading(true);
+    } else if (currentSortingOption === "Price High") {
       orderBy = "ListPrice desc";
     }
     return `${filterString}&$orderby=${orderBy}`;
@@ -260,8 +260,12 @@ export default function PropertyFilteringMapFive({ data }) {
   };
   const handleSearch = (value) => {
     setLoading(true);
+    setAllData([]); // Clear existing data
     setSearchQuery(value);
+    setPageNumber(1); // Reset page number to 1 when performing a new search
+    setTotalItemsLoaded(0); // Reset total items loaded when performing a new search
   };
+  console.log("All Data" , allData)
   const handleClickProperty = (listing) => {
     localStorage.setItem("currentUrl", window.location.href);
 
@@ -315,6 +319,7 @@ export default function PropertyFilteringMapFive({ data }) {
     handleClickProperty,
     setLoading,
     loading,
+    setAllData
   };
   const getSearchFromStates = () => {
     return {
@@ -331,43 +336,42 @@ export default function PropertyFilteringMapFive({ data }) {
       currentSortingOption,
     };
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let apiUrl =
-          "https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property";
+  const fetchData = async () => {
+    try {
+      let apiUrl =
+        "https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property";
 
-        apiUrl += getFilterStringForApi();
+      apiUrl += getFilterStringForApi();
 
-        // if (
-        //   !params.id &&
-        //   !paramsObject?.propertyId &&
-        //   !paramsObject?.propertyAddress
-        // ) {
+      // if (
+      //   !params.id &&
+      //   !paramsObject?.propertyId &&
+      //   !paramsObject?.propertyAddress
+      // ) {
 
-        //   getFilterStringForParams(); // Moved outside the fetchData function
-        // }
+      //   getFilterStringForParams(); // Moved outside the fetchData function
+      // }
 
-        const response = await axios.get(apiUrl, {
-          headers: {
-            Authorization: "Bearer 23c8729a55e9986ae45ca71d18a3742c",
-          },
-        });
-        if (response?.status == 200) {
-          setTotalPages(
-            Math.ceil(response.data["@odata.count"] / itemsPerPage)
-          );
-          setPropertyCount(response.data["@odata.count"]);
-          setPageItems(response.data.value);
-          setLoading(false);
-          // updateUrl(pageNumber); // Update URL with current page number
-        }
-      } catch (error) {
-        // Add proper error handling
-        console.error("Error fetching data:", error);
-        // Add UI feedback for the user
+      const response = await axios.get(apiUrl, {
+        headers: {
+          Authorization: "Bearer 23c8729a55e9986ae45ca71d18a3742c",
+        },
+      });
+      if (response?.status == 200) {
+        const newData = response.data.value;
+        setLoading(false);
+        setAllData((prevData) => [...prevData, ...newData]);
+        setHasMore(newData.length > 0);
+        setTotalItemsLoaded((prev) => prev + newData.length);
+        // updateUrl(pageNumber); // Update URL with current page number
       }
-    };
+    } catch (error) {
+      // Add proper error handling
+      console.error("Error fetching data:", error);
+      // Add UI feedback for the user
+    }
+  };
+  useEffect(() => {
     sessionStorage.setItem("search", JSON.stringify(getSearchFromStates()));
     if (searchQuery != paramsObject?.address) {
       router.replace(`/properties?address=${searchQuery}`);
@@ -453,7 +457,7 @@ export default function PropertyFilteringMapFive({ data }) {
       newSavedSearch[key] = paramsObject[key];
     });
 
-    setItemsPerPage(newSavedSearch.itemsPerPage);
+    setItemsPerPage(12);
     setPageNumber(newSavedSearch.pageNumber);
     setListingStatus(
       LISTING_STATUS.find(

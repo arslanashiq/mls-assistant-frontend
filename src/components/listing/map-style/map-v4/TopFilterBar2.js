@@ -229,6 +229,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   const handleSubmit = async (e) => {
     e.preventDefault();
     filterFunctions.setLoading(true);
+    filterFunctions.setAllData([]);
     if (isGoogleSuggestion) {
       const allCities = cities?.[0].name;
       const cityNameWithoutCommas = allCities.replace(/,/g, '');
@@ -322,16 +323,23 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
             <div className="row">
               <div className="col-8 col-md-4">
                 <li className="list-inline-item position-relative w-100">
-                  <input
-                    type="text"
-                    className="form-control search-field"
-                    onChange={(e) =>
-                      filterFunctions &&
-                      filterFunctions.setSearchQuery(e.target.value)
-                    }
-                    placeholder="Enter an address, neighborhood, city, or ZIP code"
-                    value={filterFunctions.searchQuery}
-                  />
+                  <form className="position-relative w-100" onSubmit={handleSubmit}>
+                    <input type="text" className="form-control search-field" value={searchTerm} onChange={handleInputChange} />
+                  </form>
+                  {showSuggestions && cities.length > 0 && (
+                    <ul className="search-suggestion property-page">
+                      {cities.map((city, index) => (
+                        <li
+                          key={index}
+                          onClick={(e) =>
+                            handleSuggestionClick(city.name, e)
+                          }
+                        >
+                          {city.name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               </div>
               <div className="col-md-8 d-none d-md-flex justify-content-center">
@@ -355,6 +363,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
                     <div className="text-end mt10 pr10">
                       <button
                         type="button"
+                          
                         className="done-btn ud-btn btn-thm drop_btn"
                       >
                         Done
