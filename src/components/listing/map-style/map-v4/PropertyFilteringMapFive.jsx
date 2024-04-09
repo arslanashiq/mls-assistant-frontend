@@ -46,6 +46,7 @@ export default function PropertyFilteringMapFive({ data }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [totalData, setTotalData] = useState(0);
 
   const [listingStatus, setListingStatus] = useState({
     value: "All",
@@ -207,11 +208,13 @@ export default function PropertyFilteringMapFive({ data }) {
   };
   const handlelistingStatus = (elm) => {
     setLoading(true);
+    setAllData([])
     setListingStatus((pre) => (pre == elm ? "All" : elm));
   };
 
   const handlepropertyTypes = (elm) => {
     setLoading(true);
+    setAllData([])
     if (elm == "All") {
       setPropertyTypes([]);
     } else {
@@ -222,30 +225,37 @@ export default function PropertyFilteringMapFive({ data }) {
   };
   const handlepriceRange = (elm) => {
     setLoading(true);
+    setAllData([])
     setPriceRange(elm);
   };
   const handlebedrooms = (elm) => {
     setLoading(true);
+    setAllData([])
     setBedrooms(elm);
   };
   const handlebathroms = (elm) => {
     setLoading(true);
+    setAllData([])
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
     setLoading(true);
+    setAllData([])
     setLocation(elm);
   };
   const handlesquirefeet = (elm) => {
     setLoading(true);
+    setAllData([])
     setSquirefeet(elm);
   };
   const handleyearBuild = (elm) => {
     setLoading(true);
+    setAllData([])
     setyearBuild(elm);
   };
   const handlecategories = (elm) => {
     setLoading(true);
+    setAllData([])
     if (elm == "All") {
       setCategories([]);
     } else {
@@ -256,11 +266,12 @@ export default function PropertyFilteringMapFive({ data }) {
   };
   const handleActiveStatus = (status) => {
     setLoading(true);
+    setAllData([])
     setActiveStatus(status);
   };
   const handleSearch = (value) => {
     setLoading(true);
-    setAllData([]); // Clear existing data
+    setAllData([])
     setSearchQuery(value);
     setPageNumber(1); // Reset page number to 1 when performing a new search
     setTotalItemsLoaded(0); // Reset total items loaded when performing a new search
@@ -268,7 +279,6 @@ export default function PropertyFilteringMapFive({ data }) {
   console.log("All Data" , allData)
   const handleClickProperty = (listing) => {
     localStorage.setItem("currentUrl", window.location.href);
-
     sessionStorage.setItem(
       "search",
       JSON.stringify({ ...paramsObject, address: searchQuery })
@@ -358,6 +368,7 @@ export default function PropertyFilteringMapFive({ data }) {
         },
       });
       if (response?.status == 200) {
+        setTotalData(response.data['@odata.count'])
         const newData = response.data.value;
         setLoading(false);
         setAllData((prevData) => [...prevData, ...newData]);
@@ -529,6 +540,7 @@ export default function PropertyFilteringMapFive({ data }) {
                       propertyCount={propertyCount}
                       setCurrentSortingOption={setCurrentSortingOption}
                       handleClickProperty={handleClickProperty}
+                      totalCount={totalData}
                     />
                   </ul>
                 </div>
@@ -571,6 +583,7 @@ export default function PropertyFilteringMapFive({ data }) {
                     totalResults={totalResults}
                     filterFunctions={filterFunctions}
                     setCurrentSortingOption={setCurrentSortingOption}
+                    totalCount={totalData}
                   />
                 </div>
                 <div className="row">

@@ -1,6 +1,6 @@
 'use client'
 import React, {useState, useEffect} from "react";
-const TopFilterBar = ({ setCurrentSortingOption, colstyle, setColstyle, pageContentTrac, startItem, endItem, totalResults, filterFunctions }) => {
+const TopFilterBar = ({ setCurrentSortingOption, colstyle, setColstyle, pageContentTrac, startItem, endItem, totalResults, filterFunctions, totalCount }) => {
   const [isMobile, setIsMobile] = useState(false); // State to determine if user is on mobile
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
@@ -31,7 +31,7 @@ const TopFilterBar = ({ setCurrentSortingOption, colstyle, setColstyle, pageCont
               <div className="col-sm-6">
                 <div className="text-center text-sm-start">
                   <p className="pagination_page_count mb-0">
-                    <p>Showing {startItem}–{endItem} of {totalResults} results</p>
+                    <p>Showing {totalCount} results</p>
                   </p>
                 </div>
               </div>
