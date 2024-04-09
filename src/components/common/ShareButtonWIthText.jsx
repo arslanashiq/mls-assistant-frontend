@@ -7,8 +7,7 @@ function ShareButtonWIthText({ open, handleClick }) {
       onClick={handleClick}
       type="button"
     >
-      <span className="flaticon-share-1 me-1 d-flex align-items-center" />
-      <span>Share</span>
+      <i class="fa-solid fa-arrow-up-from-bracket me-2"></i>
     </button>
   );
 }

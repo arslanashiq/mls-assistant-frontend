@@ -23,17 +23,24 @@ function PropertyCard({ listing, handleClickProperty = () => {} }) {
   };
 
   const isLiked=useMemo(() => handleGetLikedProperty(listing.ListingKey)||false, [likedProperties])
+  const listingContractDate = new Date(listing.ListingContractDate);
+  const currentDate = new Date();
+
+  // Calculate the difference in milliseconds between the current date and the listing contract date
+  const timeDifference = currentDate.getTime() - listingContractDate.getTime();
+
+  // Convert milliseconds to days
+  const daysOnMarket = Math.floor(timeDifference / (1000 * 3600 * 24));
 
   return (
     <>
-      {/* <div className="property col-md-12 p-0">
+      <div className="property col-md-12 p-0">
         <a href='#' onClick={() => handleClickProperty(listing)}>
           <div className='photo' style={{backgroundImage: `url(${listing.Media[0].MediaURL})`}}>
 
             <div className='mask'>
               <div className='head'>
-                <div className='tag mr-auto theme darkFontColor'>{listing.StandardStatus}</div>
-                
+                <div className='tag mr-auto theme darkFontColor'>{daysOnMarket} days on market</div>
               </div>
               <div className='body'></div>
               <div className='foot'>
@@ -66,8 +73,8 @@ function PropertyCard({ listing, handleClickProperty = () => {} }) {
             </div>
           </div>
         </a>
-      </div> */}
-      <div className="listing-style1 mb-4">
+      </div>
+      {/* <div className="listing-style1 mb-0">
         <div className="list-thumb">
           <Image
             width={382}
@@ -80,7 +87,7 @@ function PropertyCard({ listing, handleClickProperty = () => {} }) {
           <div className="sale-sticker-wrap">
             <div className="list-tag fz12">
               <span className="flaticon-electricity me-2" />
-              {daysOnMarket} days on market
+              {listing.StandardStatus}
             </div>
           </div>
           <button onClick={() => handleClickLikeButton(listing)} className="like-button">
@@ -91,8 +98,8 @@ function PropertyCard({ listing, handleClickProperty = () => {} }) {
           <h4 onClick={() => handleClickProperty(listing)} className="mb0">
             $
             {listing.ListPrice.toLocaleString(undefined, {
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
             })}
           </h4>
           <div className="list-meta d-flex align-items-center" onClick={() => handleClickProperty(listing)}>
@@ -122,7 +129,7 @@ function PropertyCard({ listing, handleClickProperty = () => {} }) {
             }}
           />
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

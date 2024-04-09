@@ -2,7 +2,7 @@ import * as React from "react";
 import { enqueueSnackbar } from "notistack";
 import ShareButtonWIthText from "../common/ShareButtonWIthText";
 import ShareButtonWithoutText from "../common/ShareButtonWithoutText";
-import { Popover } from "@mui/material";
+import { Popover, Box } from "@mui/material";
 
 export default function SharePropertyModal({
   data = null,
@@ -102,56 +102,58 @@ export default function SharePropertyModal({
           vertical: "top",
         }}
       >
-        <div className="">
-          <div className="d-flex mb15 align-items-center justify-content-between">
-            <h5 className="mt10">Share Property</h5>
-            
-            <span onClick={handleCopy} style={{ cursor: "pointer" }}>
-              <span className="icon mr1">
-                <span className="fa-regular fa-copy" />
-              </span>{" "}
-              Copy
-            </span>
+        <Box style={{ width:'300', paddingLeft: 20, paddingRight: 20, }}>
+          <div className="">
+            <div className="d-flex mb15 align-items-center justify-content-between">
+              <h5 className="mt10">Share Property</h5>
+              
+              <span onClick={handleCopy} style={{ cursor: "pointer" }}>
+                <span className="icon mr1">
+                  <span className="fa-regular fa-copy" />
+                </span>{" "}
+                Copy
+              </span>
+            </div>
+            <h5>{data?.UnparsedAddress}</h5>
+            <form className="form-style1" onSubmit={handleSubmitForm}>
+              <div className="mb10">
+                <label className="form-label dark-color ">Your Email</label>
+
+                <input
+                  type="email"
+                  name="sender_email"
+                  onChange={handleChange}
+                  value={inputs.sender_email}
+                  className="form-control"
+                  placeholder="Enter your email"
+                  disabled={senderEmailDisabled}
+                  required
+
+                />
+
+              </div>
+              <div className="mb10">
+                <label className="form-label dark-color ">recipient Email</label>
+                <input
+                  type="email"
+                  name="receiver_email"
+                  onChange={handleChange}
+                  value={inputs.receiver_email}
+                  className="form-control"
+                  placeholder="Enter your email"
+                  required
+                />
+
+              </div>
+
+              <div className="d-grid mb20">
+                <button className="ud-btn btn-thm btn btn-sm" type="submit">
+                  Share Search
+                </button>
+              </div>
+            </form>
           </div>
-          <h5>{data?.UnparsedAddress}</h5>
-          <form className="form-style1" onSubmit={handleSubmitForm}>
-            <div className="mb10">
-              <label className="form-label dark-color ">Your Email</label>
-
-              <input
-                type="email"
-                name="sender_email"
-                onChange={handleChange}
-                value={inputs.sender_email}
-                className="form-control"
-                placeholder="Enter your email"
-                disabled={senderEmailDisabled}
-                required
-
-              />
-
-            </div>
-            <div className="mb10">
-              <label className="form-label dark-color ">recipient Email</label>
-              <input
-                type="email"
-                name="receiver_email"
-                onChange={handleChange}
-                value={inputs.receiver_email}
-                className="form-control"
-                placeholder="Enter your email"
-                required
-              />
-
-            </div>
-
-            <div className="d-grid mb20">
-              <button className="ud-btn btn-thm btn btn-sm" type="submit">
-                Share Search
-              </button>
-            </div>
-          </form>
-        </div>
+        </Box>
       </Popover>
     </div>
   );

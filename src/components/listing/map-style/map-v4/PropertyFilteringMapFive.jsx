@@ -176,12 +176,16 @@ export default function PropertyFilteringMapFive({ data }) {
 
     // Handle sorting based on currentSortingOption
     if (currentSortingOption === "Newest") {
-      orderBy = "ModificationTimestamp desc";
+      setLoading(true);
+      orderBy = "OriginalEntryTimestamp desc";
     } else if (currentSortingOption === "Oldest") {
-      orderBy = "ModificationTimestamp asc";
+      setLoading(true);
+      orderBy = "OriginalEntryTimestamp asc";
     } else if (currentSortingOption === "Price Low") {
+      setLoading(true);
       orderBy = "ListPrice asc";
     } else if (currentSortingOption === "Price High") {
+      setLoading(true);
       orderBy = "ListPrice desc";
     }
     return `${filterString}&$orderby=${orderBy}`;
