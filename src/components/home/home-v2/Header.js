@@ -33,18 +33,27 @@ const Header = () => {
       <nav className='navbar navbar-expand-md navbar-dark theme bgColor lightFontColor'>
         <Link className="navbar-brand" href="/">
           {isProUser || isDomainAvailable ? (
+            matchedJsonObject && matchedJsonObject.logo ? (
+              <img
+                src={matchedJsonObject.logo}
+                alt="MLS Assistant"
+                width={'200px'}
+              />
+            ) : (
+              <img
+                src="/images/mls-assistant-white.png"
+                alt="MLS Assistant"
+                width={'70px'}
+              />
+            )
+          ) : (
             <img
-              src={matchedJsonObject.logo}
+              src="/images/mls-assistant-white.png"
               alt="MLS Assistant"
-              width={'200px'}
+              width={'70px'}
             />
-          ): (
-          <img
-            src="/images/mls-assistant-white.png"
-            alt="MLS Assistant"
-            width={'70px'}
-          />
           )}
+
         </Link>
         <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation'>
           <span className='navbar-toggle-icon'></span>
