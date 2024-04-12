@@ -9,7 +9,8 @@ import { useAppContext } from "@/custom-hooks/AppContext";
 import DashbaordHeaderProfile from "@/components/common/DashbaordHeaderProfile";
 
 const Header = () => {
-  const { isLoggedIn, handleOpenLoginModal } = useAppContext();
+  const { isLoggedIn, handleOpenLoginModal, currentDomain, isDomainAvailable, proUsername, isProUser, matchedJsonObject } = useAppContext();
+  console.log(currentDomain, isDomainAvailable, proUsername, isProUser, matchedJsonObject);
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
@@ -31,11 +32,19 @@ const Header = () => {
     <>
       <nav className='navbar navbar-expand-md navbar-dark theme bgColor lightFontColor'>
         <Link className="navbar-brand" href="/">
+          {isProUser || isDomainAvailable ? (
+            <img
+              src={matchedJsonObject.logo}
+              alt="MLS Assistant"
+              width={'200px'}
+            />
+          ): (
           <img
             src="/images/mls-assistant-white.png"
             alt="MLS Assistant"
             width={'70px'}
           />
+          )}
         </Link>
         <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation'>
           <span className='navbar-toggle-icon'></span>

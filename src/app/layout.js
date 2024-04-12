@@ -63,18 +63,33 @@ export default function RootLayout({ children }) {
     // Append jQuery script to the document body
     document.body.appendChild(jqueryScript);
   }, []);
-  function checkDomainAvailability(domain) {
-    return domainsData.domains.some(item => item.domain === domain);
-  }
   useEffect(() => {
+    // Check domain availability and pro user status when component mounts
     const currentDomain = window.location.hostname;
     const isDomainAvailable = checkDomainAvailability(currentDomain);
-    if (isDomainAvailable) {
-      console.log("showing data for domain available:", currentDomain);
+    const proUsername = extractUsernameFromPath(window.location.pathname);
+    const isProUser = checkProSlugAvailability(proUsername);
+    // Set domain and pro user status in localStorage
+    localStorage.setItem('currentDomain', currentDomain);
+    localStorage.setItem('isDomainAvailable', isDomainAvailable.toString());
+    if (isProUser) {
+      localStorage.setItem('proUsername', proUsername);
     } else {
-      console.log("Domain not available:", currentDomain);
     }
   }, []);
+  const checkDomainAvailability = (domain) => {
+    return domainsData.domains.some(item => item.domain === domain);
+  };
+  const extractUsernameFromPath = (path) => {
+    const parts = path.split('/pro/');
+    if (parts.length === 2) {
+      return parts[1].split('/')[0]; // This ensures we only get the username part
+    }
+    return null;
+  };
+  const checkProSlugAvailability = (username) => {
+    return domainsData.domains.some(item => item.slug === username);
+  };
   return (
     <html lang="en">
       <body

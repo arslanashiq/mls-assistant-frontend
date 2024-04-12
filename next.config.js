@@ -5,6 +5,8 @@ const nextConfig = {
       "dvvjkgh94f2v6.cloudfront.net",
       "cdn.rets.ly",
       "s3.amazonaws.com",
+      "retsly-importd-production.s3.amazonaws.com",
+      "media.mlspin.com"
     ],
   },
   env: {

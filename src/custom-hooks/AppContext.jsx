@@ -8,6 +8,7 @@ import { change_password } from "@/DAL/user";
 import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import React, { createContext, useState, useEffect, useContext } from "react";
+import domainsData from "@/data/domains.json";
 
 const MyContext = createContext();
 export const useAppContext = () => useContext(MyContext);
@@ -21,7 +22,11 @@ function AppContext({ children }) {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [likedProperties, setLikedProperties] = useState([]);
   const [openResetPasswordModal, setOpenResetPasswordModal] = useState(false);
-
+  const [currentDomain, setCurrentDomain] = useState("");
+  const [isDomainAvailable, setIsDomainAvailable] = useState(false);
+  const [proUsername, setProUsername] = useState("");
+  const [isProUser, setIsProUser] = useState(false);
+  const [matchedJsonObject, setMatchedJsonObject] = useState({});
   // ================================handlers and functions===============//
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -42,6 +47,79 @@ function AppContext({ children }) {
       setLikedProperties(response?.customer_property?.property_data);
     }
   };
+
+
+  const checkDomainAvailability = (domain) => {
+    return domainsData.domains.some((item) => item.domain === domain);
+  };
+
+  const extractUsernameFromPath = (path) => {
+    const parts = path.split('/pro/');
+    if (parts.length === 2) {
+      return parts[1].split('/')[0];
+    }
+    return null;
+  };
+
+  const checkProSlugAvailability = (username) => {
+    return domainsData.domains.some((item) => item.slug === username);
+  };
+
+useEffect(() => {
+  const currentDomain = window.location.hostname;
+  setCurrentDomain(currentDomain);
+
+  const isDomainAvailable = checkDomainAvailability(currentDomain);
+  setIsDomainAvailable(isDomainAvailable);
+
+  // Check if pro username is set in localStorage
+  const proUsernameLocalStorage = localStorage.getItem('proUsername');
+  if (proUsernameLocalStorage) {
+    setProUsername(proUsernameLocalStorage);
+
+    // Check if the pro username is available
+    const isProUser = checkProSlugAvailability(proUsernameLocalStorage);
+    setIsProUser(isProUser);
+
+    // Find and set the matched JSON object
+    const matchedObject = domainsData.domains.find(item => {
+      console.log("Domain:", item.domain, "ProUsername:", item.slug);
+      return item.domain === currentDomain || item.slug === proUsernameLocalStorage;
+    });
+    console.log("Matched Object:", matchedObject);
+    setMatchedJsonObject(matchedObject);
+  } else {
+    // If pro username is not set in localStorage, proceed with extracting it from the URL path
+    const proUsername = extractUsernameFromPath(window.location.pathname);
+    setProUsername(proUsername);
+
+    const isProUser = checkProSlugAvailability(proUsername);
+    setIsProUser(isProUser);
+
+    // Find and set the matched JSON object
+    const matchedObject = domainsData.domains.find(item => {
+      console.log("Domain:", item.domain, "ProUsername:", item.slug);
+      return item.domain === currentDomain && item.slug === proUsername;
+    });
+    console.log("Matched Object:", matchedObject);
+    setMatchedJsonObject(matchedObject);
+  }
+
+  localStorage.setItem('currentDomain', currentDomain);
+  localStorage.setItem('isDomainAvailable', isDomainAvailable.toString());
+
+  const userExist =
+    localStorage.getItem("token") && localStorage.getItem("user");
+  if (userExist) {
+    setisLoggedIn(true);
+    fetchLikedProperties();
+  } else {
+    setLikedProperties([]);
+  }
+}, []);
+
+
+
 
   const handleGetLikedProperty = (ListingKey) =>
     likedProperties?.find(
@@ -163,7 +241,6 @@ function AppContext({ children }) {
   }, [isLoggedIn]);
 
   const collection = {
-    // states
     openLoginModal,
     setOpenLoginModal,
     isLoggedIn,
@@ -172,8 +249,6 @@ function AppContext({ children }) {
     setLikedProperties,
     openResetPasswordModal,
     setOpenResetPasswordModal,
-
-    // handlers
     handleLogout,
     getPropertyAddress,
     handleLikeProperty,
@@ -185,6 +260,11 @@ function AppContext({ children }) {
     handleClickProperty,
     handleChangePassword,
     handleCloseResetPasswordModal,
+    currentDomain,
+    isDomainAvailable,
+    proUsername,
+    isProUser,
+    matchedJsonObject,
   };
   return <MyContext.Provider value={collection}>{children}</MyContext.Provider>;
 }
