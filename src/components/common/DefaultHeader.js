@@ -9,7 +9,8 @@ import { useAppContext } from "@/custom-hooks/AppContext";
 import DashbaordHeaderProfile from "@/components/common/DashbaordHeaderProfile";
 
 const Header = () => {
-  const { isLoggedIn, handleOpenLoginModal } = useAppContext();
+  const { isLoggedIn, handleOpenLoginModal, currentDomain, isDomainAvailable, proUsername, isProUser, matchedJsonObject } = useAppContext();
+  console.log(currentDomain, isDomainAvailable, proUsername, isProUser, matchedJsonObject);
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
@@ -26,24 +27,40 @@ const Header = () => {
       window.removeEventListener("scroll", changeBackground);
     };
   }, []);
-
+  const [showNavbar, setShowNavbar] = useState(false);
+    const toggleNavbar = () => {
+    setShowNavbar(!showNavbar);
+  };
   return (
     <>
       <nav className='navbar navbar-expand-md navbar-dark theme bgColor lightFontColor'>
         <Link className="navbar-brand" href="/">
-          <img
-            src="/images/mls-assistant-white.png"
-            alt="MLS Assistant"
-            width={'70px'}
-          />
-        </Link>
-        <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation'>
-          <span className='navbar-toggle-icon'></span>
-          <span className='navbar-toggle-icon'></span>
-          <span className='navbar-toggle-icon'></span>
-        </button>
+          {isProUser || isDomainAvailable ? (
+            matchedJsonObject && matchedJsonObject.logo ? (
+              <img
+                src={`/${matchedJsonObject.logo}`}
+                alt="MLS Assistant"
+                width={'200px'}
+              />
+            ) : (
+              <img
+                src="/images/mls-assistant-white.png"
+                alt="MLS Assistant"
+                width={'70px'}
+              />
+            )
+          ) : (
+            <img
+              src="/images/mls-assistant-white.png"
+              alt="MLS Assistant"
+              width={'70px'}
+            />
+          )}
 
-        <div className='collapse navbar-collapse' id='navbarCollapse'>
+        </Link>
+
+
+        <div className={`collapse navbar-collapse ${showNavbar ? 'show' : ''}`} id='navbarCollapse'>
           <ul className='navbar-nav mr-auto'>
             <li className='nav-item active'>
               <Link href={`/`} className='nav-link'>
@@ -72,8 +89,15 @@ const Header = () => {
                 </a>
               ) : null}
             </li>
-            <li className='nav-item active'>{isLoggedIn && <DashbaordHeaderProfile />}</li>
           </ul>
+        </div>
+        <div className="d-flex">
+          {isLoggedIn && <DashbaordHeaderProfile />}
+          <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation' onClick={toggleNavbar}>
+            <span className='navbar-toggle-icon'></span>
+            <span className='navbar-toggle-icon'></span>
+            <span className='navbar-toggle-icon'></span>
+          </button>
         </div>
       </nav>
       <div className="signup-modal">
