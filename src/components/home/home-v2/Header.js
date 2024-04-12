@@ -35,7 +35,7 @@ const Header = () => {
           {isProUser || isDomainAvailable ? (
             matchedJsonObject && matchedJsonObject.logo ? (
               <img
-                src={matchedJsonObject.logo}
+                src={`/${matchedJsonObject.logo}`}
                 alt="MLS Assistant"
                 width={'200px'}
               />
