@@ -1,4 +1,5 @@
 import { invokeApi } from "./invokeApi";
+import { invokeApiPHP } from "./invokeApi-php";
 
 export const get_customer_property = async () => {
   const reqObj = {
@@ -34,14 +35,18 @@ export const delete_customer_property = async (id) => {
 };
 export const share_property_via_email = async (body) => {
   const reqObj = {
-    path: `api/customer/customer_send_email`,
-    method: "POST",
+    path: 'shareProperty.php', // Remove URL parameters
+    method: 'POST', // Change the method to POST
     headers: {
-      "x-sh-auth": localStorage.getItem("token"),
+      'Content-Type': 'application/json',
+      'x-sh-auth': localStorage.getItem('token'),
     },
-    postData:body
+    postData: body,
   };
-  return invokeApi(reqObj);
+
+  return invokeApiPHP(reqObj);
 };
+
+
 
 

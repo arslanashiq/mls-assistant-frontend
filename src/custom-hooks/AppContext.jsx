@@ -176,10 +176,15 @@ function AppContext({ children }) {
     try {
       const data = { ...listing };
       delete data?.["@odata.id"];
+      const currentSite = window.location.href;
+
       const payload = {
         ...inputs,
         property_object: data,
+        sendMail: 1,
+        currentSite: currentSite
       };
+      console.log(payload);
       const response = await share_property_via_email(payload);
       if (response.code == 200) {
         enqueueSnackbar(`Property shared to ${payload?.receiver_email}`, {
