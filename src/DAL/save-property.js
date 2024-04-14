@@ -50,8 +50,8 @@ export const share_property_via_email = async (body) => {
 
 export const request_tour_form = async (body) => {
   const reqObj = {
-    path: "", // Remove URL parameters
-    method: "POST", // Change the method to POST
+    path: "",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       "x-sh-auth": localStorage.getItem("token"),
@@ -59,5 +59,6 @@ export const request_tour_form = async (body) => {
     postData: body,
   };
 
-  return invokeApiPHP(reqObj);
+  console.log(reqObj, "=====reqObt");
+  // return invokeApiPHP(reqObj);
 };

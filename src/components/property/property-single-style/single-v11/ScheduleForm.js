@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useAppContext } from "@/custom-hooks/AppContext";
 import { useState, useEffect } from "react";
+import { request_tour_form } from "@/DAL/save-property";
+import { useSnackbar } from "notistack";
 const ScheduleForm = ({ page_data, type }) => {
   console.log(page_data);
   const {
@@ -16,44 +18,64 @@ const ScheduleForm = ({ page_data, type }) => {
   // const [name, setName] = useState("");
   // const [phone, setPhone] = useState("");
   // const [email, setEmail] = useState("");
-  // const [message, setMessage] = useState();
+  const [message, setMessage] = useState();
+  const { enqueueSnackbar } = useSnackbar();
   const [inputState, setInputsState] = useState({
     name: "",
     email: "",
     phone: "",
+    message: "",
   });
+
   const [agree, setAgree] = useState(false);
   useEffect(() => {
     if (isLoggedIn) {
       const user = JSON.parse(localStorage.getItem("user"));
-      setEmail(user.email);
-      setName(`${user.first_name} ${user.last_name}`);
+      setInputsState(user.email);
+      setInputsState(`${user.first_name} ${user.last_name}`);
     }
     if (type == "tour") {
-      setMessage(
+      setInputsState(
         `Hi there, I would like to request a tour on ${page_data?.UnparsedAddress}`
       );
     } else {
-      setMessage(
+      setInputsState(
         `Hi there, I would like to request more info on ${page_data?.UnparsedAddress}`
       );
     }
   }, []);
+
+  const handleChangeInputsState = (e) => {
+    const { name, value } = e.target;
+    setInputsState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
 
     formData.append("name", inputState.name);
+    formData.append("email", inputState.email);
+    formData.append("phone", inputState.phone);
+    formData.append("message", inputState.message);
+    // formData.append("page_data", JSON.stringify(page_data));
+    formData.append("page_data", page_data);
 
-    // const formData = {
-    //   name,
-    //   email,
-    //   phone,
-    //   message,
-    //   agree,
-    // };
-    // console.log(formData);
+    for (var value of formData.values()) {
+    }
+    console.log(...formData, "===formData");
+
+    // const result = await request_tour_form(formData);
+    // if (result.code === 200) {
+    //   enqueueSnackbar("submit form successfully.", {
+    //     variant: "success",
+    //   });
+    // }
   };
 
   return (
@@ -66,10 +88,10 @@ const ScheduleForm = ({ page_data, type }) => {
               type="text"
               className="form-control"
               placeholder="Name"
+              name="name"
+              value={inputState.name}
               required
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleChangeInputsState}
             />
           </div>
         </div>
@@ -81,10 +103,10 @@ const ScheduleForm = ({ page_data, type }) => {
               type="email"
               className="form-control"
               placeholder="Email"
+              name="email"
               required
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={inputState.email}
+              onChange={handleChangeInputsState}
             />
           </div>
         </div>
@@ -97,10 +119,10 @@ const ScheduleForm = ({ page_data, type }) => {
               type="text"
               className="form-control"
               placeholder="Enter your phone"
+              name="phone"
+              value={inputState.phone}
               required
-              id="phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handleChangeInputsState}
             />
           </div>
         </div>
@@ -112,10 +134,10 @@ const ScheduleForm = ({ page_data, type }) => {
             <textarea
               cols={30}
               rows={4}
-              id="message"
+              name="message"
               placeholder="Enter your message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={inputState.message}
+              onChange={handleChangeInputsState}
             />
           </div>
         </div>
