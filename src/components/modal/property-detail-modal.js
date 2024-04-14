@@ -101,9 +101,9 @@ export default function PropertyDetailModal({
         fullWidth
         maxWidth="lg"
         sx={{
-          '.MuiPaper-root': {
-            maxHeight: '100vh'
-          }
+          ".MuiPaper-root": {
+            maxHeight: "100vh",
+          },
         }}
         open={Boolean(params?.id)}
         onClose={handleClickCloseModal}
@@ -335,7 +335,7 @@ export default function PropertyDetailModal({
                                     <li>
                                       Community Features:
                                       {data?.CommunityFeatures &&
-                                        data.CommunityFeatures.length > 0
+                                      data.CommunityFeatures.length > 0
                                         ? data.CommunityFeatures.join(", ")
                                         : "None"}
                                     </li>

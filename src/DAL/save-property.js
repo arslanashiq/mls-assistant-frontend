@@ -33,13 +33,14 @@ export const delete_customer_property = async (id) => {
   };
   return invokeApi(reqObj);
 };
+
 export const share_property_via_email = async (body) => {
   const reqObj = {
-    path: 'shareProperty.php', // Remove URL parameters
-    method: 'POST', // Change the method to POST
+    path: "shareProperty.php", // Remove URL parameters
+    method: "POST", // Change the method to POST
     headers: {
-      'Content-Type': 'application/json',
-      'x-sh-auth': localStorage.getItem('token'),
+      "Content-Type": "application/json",
+      "x-sh-auth": localStorage.getItem("token"),
     },
     postData: body,
   };
@@ -47,6 +48,16 @@ export const share_property_via_email = async (body) => {
   return invokeApiPHP(reqObj);
 };
 
+export const request_tour_form = async (body) => {
+  const reqObj = {
+    path: "", // Remove URL parameters
+    method: "POST", // Change the method to POST
+    headers: {
+      "Content-Type": "application/json",
+      "x-sh-auth": localStorage.getItem("token"),
+    },
+    postData: body,
+  };
 
-
-
+  return invokeApiPHP(reqObj);
+};
