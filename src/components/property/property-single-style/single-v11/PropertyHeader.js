@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAppContext } from "@/custom-hooks/AppContext";
 import SharePropertyModal from "@/components/menu/SharePropertyModal";
-
+import RequestTour from "./requestTour";
 const PropertyHeader = ({ id, page_data, backButtonClick = null }) => {
   const {
     likedProperties,
@@ -45,7 +45,7 @@ const PropertyHeader = ({ id, page_data, backButtonClick = null }) => {
           <i className="fa-solid fa-arrow-left"></i>
         </button>
         <div className="single-property-content mb30-md">
-          <div className="single-property-content my-4">
+          <div className="single-property-content  mt-3 mb-2">
             <div className="property-action d-flex align-items-center justify-content-between">
               <img
                 src="images/mls-assistant.png"
@@ -152,6 +152,7 @@ const PropertyHeader = ({ id, page_data, backButtonClick = null }) => {
               MLS ID {page_data?.ListingId}
             </div>
           </div>
+          <RequestTour page_data={page_data} />
         </div>
       </div>
       {/* End .col-lg--4 */}

@@ -1746,3 +1746,22 @@ footer .fineprint p {
     margin-bottom: 5px;
   }
 }
+.btn-request{
+    background: slateblue;
+    border: none;
+    padding: 12px 32px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #fff;
+    width: 100%;
+}
+.btn-request-info{
+    border: 2px solid slateblue;
+    background-color: #fff;
+    padding: 11px 32px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: slateblue;
+    width: 100%;
+    font-weight: 600;
+}
