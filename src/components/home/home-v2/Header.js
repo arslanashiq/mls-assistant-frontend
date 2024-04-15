@@ -37,7 +37,7 @@ const Header = () => {
               <img
                 src={`/${matchedJsonObject.logo}`}
                 alt="MLS Assistant"
-                width={'200px'}
+                width={`${matchedJsonObject.logoWidth}px`}
               />
             ) : (
               <img

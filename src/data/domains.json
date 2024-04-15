@@ -7,24 +7,26 @@
       "title": "Team Realtor",
       "name": "Mark Holt",
       "email": "mark@mlsassistant.com",
-      "logo": "images/logos/realtypartners1.png",
+      "logo": "images/mls-assistant.png",
       "phone": "203-933-2500 EXT.303",
       "mobile": "(203)933-2500",
-      "officeName": "Realty Partners One",
-      "websiteContent": "<p style='text-align:center'><img alt='' src='https://storage.googleapis.com/idx-host/website/970/uploads/Realty%20Partners%20%20%20Home.png' style='width:100%' /></p><p><strong>Realty Partners</strong></p><p style='text-align:center'>433 Campbell Avenue&nbsp;<br />West Haven, CT, 06516<br />Tel: (203) 933-2500<br />Fax: (203) 933-3721<br />Toll Free: (800) 356-3734<br /><a href='http://web.archive.org/web/20131126112743/http://realtypartnersct.com/index.php/website/contact'>RChambJr@gmail.com</a><a href='mailto:RChambJr@gmail.com'>&nbsp;</a><br /><a href='http://www.realtypartners1.com'>www.realtypartners1.com</a></p>"
+      "officeName": "Team Realtor",
+      "websiteContent": "",
+      "logoWidth": "80"
     },
     {
       "domain": "localhost",
-      "data": "Data for b2bmailer.org",
-      "slug": "localhost",
+      "data": "Data for localhost",
+      "slug": "markholt",
       "title": "Team Realtor",
-      "name": "Mark Holt",
-      "email": "mark@mlsassistant.com",
-      "logo": "images/logos/realtypartners1.png",
+      "name": "Ali Hamza",
+      "email": "hmzamalik47@gmail.com",
+      "logo": "images/mls-assistant.png?width=80",
+      "logoWidth": "80",
       "phone": "203-933-2500 EXT.303",
       "mobile": "(203)933-2500",
-      "officeName": "Realty Partners One",
-      "websiteContent": "<p style='text-align:center'><img alt='' src='https://storage.googleapis.com/idx-host/website/970/uploads/Realty%20Partners%20%20%20Home.png' style='width:100%' /></p><p><strong>Realty Partners</strong></p><p style='text-align:center'>433 Campbell Avenue&nbsp;<br />West Haven, CT, 06516<br />Tel: (203) 933-2500<br />Fax: (203) 933-3721<br />Toll Free: (800) 356-3734<br /><a href='http://web.archive.org/web/20131126112743/http://realtypartnersct.com/index.php/website/contact'>RChambJr@gmail.com</a><a href='mailto:RChambJr@gmail.com'>&nbsp;</a><br /><a href='http://www.realtypartners1.com'>www.realtypartners1.com</a></p>"
+      "officeName": "Team Realtor",
+      "websiteContent": ""
     },
     {
       "domain": "realtypartners1.com",
@@ -37,6 +39,7 @@
       "phone": "203-933-2500 EXT.303",
       "mobile": "(203)933-2500",
       "officeName": "Realty Partners One",
+      "logoWidth": "200",
       "websiteContent": "<p style='text-align:center'><img alt='' src='https://storage.googleapis.com/idx-host/website/970/uploads/Realty%20Partners%20%20%20Home.png' style='width:100%' /></p><p><strong>Realty Partners</strong></p><p style='text-align:center'>433 Campbell Avenue&nbsp;<br />West Haven, CT, 06516<br />Tel: (203) 933-2500<br />Fax: (203) 933-3721<br />Toll Free: (800) 356-3734<br /><a href='http://web.archive.org/web/20131126112743/http://realtypartnersct.com/index.php/website/contact'>RChambJr@gmail.com</a><a href='mailto:RChambJr@gmail.com'>&nbsp;</a><br /><a href='http://www.realtypartners1.com'>www.realtypartners1.com</a></p>"
     }
   ]
