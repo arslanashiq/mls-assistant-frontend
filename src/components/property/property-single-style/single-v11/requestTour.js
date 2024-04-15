@@ -44,7 +44,7 @@ const RequestTour = ({ page_data }) => {
       >
         <Box sx={style}>
           <h4>Request a tour</h4>
-          <ScheduleForm page_data={page_data} type="tour"></ScheduleForm>
+          <ScheduleForm page_data={page_data} type="tour" setOpen={setOpen}></ScheduleForm>
         </Box>
       </Modal>
       <Modal
@@ -55,7 +55,7 @@ const RequestTour = ({ page_data }) => {
       >
         <Box sx={style}>
           <h4>Request Info</h4>
-          <ScheduleForm page_data={page_data} type="info"></ScheduleForm>
+          <ScheduleForm page_data={page_data} type="info" setOpenInfo={setOpenInfo}></ScheduleForm>
         </Box>
       </Modal>
     </div>

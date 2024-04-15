@@ -3,7 +3,7 @@ import { useAppContext } from "@/custom-hooks/AppContext";
 import { useState, useEffect } from "react";
 import { request_tour_form } from "@/DAL/save-property";
 import { useSnackbar } from "notistack";
-const ScheduleForm = ({ page_data, type }) => {
+const ScheduleForm = ({ page_data, type, setOpen, setOpenInfo }) => {
   console.log(page_data);
   const {
     isLoggedIn,
@@ -14,11 +14,6 @@ const ScheduleForm = ({ page_data, type }) => {
     isProUser,
     matchedJsonObject,
   } = useAppContext();
-  // State variables to hold form input values
-  // const [name, setName] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [email, setEmail] = useState("");
-  const [message, setMessage] = useState();
   const { enqueueSnackbar } = useSnackbar();
   const [inputState, setInputsState] = useState({
     name: "",
@@ -31,19 +26,25 @@ const ScheduleForm = ({ page_data, type }) => {
   useEffect(() => {
     if (isLoggedIn) {
       const user = JSON.parse(localStorage.getItem("user"));
-      setInputsState(user.email);
-      setInputsState(`${user.first_name} ${user.last_name}`);
+      setInputsState((prevInputState) => ({
+        ...prevInputState,
+        email: user.email,
+        name: `${user.first_name} ${user.last_name}`,
+      }));
     }
-    if (type == "tour") {
-      setInputsState(
-        `Hi there, I would like to request a tour on ${page_data?.UnparsedAddress}`
-      );
+    // Assuming type and page_data are defined and provided as dependencies
+    if (type === "tour") {
+      setInputsState((prevInputState) => ({
+        ...prevInputState,
+        message: `Hi there, I would like to request a tour on ${page_data?.UnparsedAddress}`,
+      }));
     } else {
-      setInputsState(
-        `Hi there, I would like to request more info on ${page_data?.UnparsedAddress}`
-      );
+      setInputsState((prevInputState) => ({
+        ...prevInputState,
+        message: `Hi there, I would like to request more info on ${page_data?.UnparsedAddress}`,
+      }));
     }
-  }, []);
+  }, [isLoggedIn, type, page_data]);
 
   const handleChangeInputsState = (e) => {
     const { name, value } = e.target;
@@ -56,26 +57,34 @@ const ScheduleForm = ({ page_data, type }) => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-
-    formData.append("name", inputState.name);
-    formData.append("email", inputState.email);
-    formData.append("phone", inputState.phone);
-    formData.append("message", inputState.message);
-    // formData.append("page_data", JSON.stringify(page_data));
-    formData.append("page_data", page_data);
-
-    for (var value of formData.values()) {
+    const currentSite = window.location.href;
+    let reqType = "";
+    if (type === "tour") {
+      reqType = "tour";
+    } else {
+      reqType = "info";
     }
-    console.log(...formData, "===formData");
-
-    // const result = await request_tour_form(formData);
-    // if (result.code === 200) {
-    //   enqueueSnackbar("submit form successfully.", {
-    //     variant: "success",
-    //   });
-    // }
+    const payload = {
+      "name": inputState.name,
+      "email": inputState.email,
+      "phone": inputState.phone,
+      "message": inputState.message,
+      "page_data": page_data,
+      "contactPersonEmail": matchedJsonObject?.email,
+      "contactPersonName": matchedJsonObject?.name,
+      "currentSite": matchedJsonObject?.domain,
+      "logo": matchedJsonObject?.logo,
+      "type": reqType,
+      "sendReq": 1
+    }
+    const result = await request_tour_form(payload);
+    if (result.code === 200) {
+      enqueueSnackbar("submit form successfully.", {
+        variant: "success",
+      });
+      setOpen(false);
+      setOpenInfo(false);
+    }
   };
 
   return (
@@ -156,10 +165,10 @@ const ScheduleForm = ({ page_data, type }) => {
               />
             </div>
             <div className="single-contant ml20 ml0-xs">
-              <h6 className="title mb-1">{matchedJsonObject.name}</h6>
+              <h6 className="title mb-1">{matchedJsonObject?.name}</h6>
               <div className="agent-meta d-md-flex align-items-center">
                 <p className="mb0 p0">
-                  {matchedJsonObject.officeName}
+                  {matchedJsonObject?.officeName}
                   <br />
                   {matchedJsonObject?.mobile || matchedJsonObject?.phone}
                 </p>
