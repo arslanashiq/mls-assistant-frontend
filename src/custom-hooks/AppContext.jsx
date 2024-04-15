@@ -66,57 +66,47 @@ function AppContext({ children }) {
   };
 
   useEffect(() => {
-    const currentDomain = window.location.hostname;
-    setCurrentDomain(currentDomain);
+  const currentDomain = window.location.hostname;
+  setCurrentDomain(currentDomain);
 
+  // Check if pro username is set in localStorage
+  const proUsernameLocalStorage = localStorage.getItem('proUsername');
+
+  if (proUsernameLocalStorage) {
+    // If pro username is found in localStorage
+    setProUsername(proUsernameLocalStorage);
+
+    // Check if the pro username is available
+    const isProUser = checkProSlugAvailability(proUsernameLocalStorage);
+    setIsProUser(isProUser);
+
+    // Find and set the matched JSON object for pro user
+    const matchedObject = domainsData.domains.find(item => item.slug === proUsernameLocalStorage);
+    setMatchedJsonObject(matchedObject);
+  } else {
+    // If pro username is not set in localStorage, proceed with checking domain
+
+    // Check if the domain is available
     const isDomainAvailable = checkDomainAvailability(currentDomain);
     setIsDomainAvailable(isDomainAvailable);
 
-    // Check if pro username is set in localStorage
-    const proUsernameLocalStorage = localStorage.getItem('proUsername');
-    if (proUsernameLocalStorage) {
-      setProUsername(proUsernameLocalStorage);
+    // Find and set the matched JSON object for domain
+    const matchedObject = domainsData.domains.find(item => item.domain === currentDomain);
+    setMatchedJsonObject(matchedObject);
+  }
 
-      // Check if the pro username is available
-      const isProUser = checkProSlugAvailability(proUsernameLocalStorage);
-      setIsProUser(isProUser);
+  localStorage.setItem('currentDomain', currentDomain);
+  localStorage.setItem('isDomainAvailable', isDomainAvailable.toString());
 
-      // Find and set the matched JSON object
-      const matchedObject = domainsData.domains.find(item => {
-        console.log("Domain:", item.domain, "ProUsername:", item.slug);
-        return item.domain === currentDomain || item.slug === proUsernameLocalStorage;
-      });
-      console.log("Matched Object:", matchedObject);
-      setMatchedJsonObject(matchedObject);
-    } else {
-      // If pro username is not set in localStorage, proceed with extracting it from the URL path
-      const proUsername = extractUsernameFromPath(window.location.pathname);
-      setProUsername(proUsername);
-
-      const isProUser = checkProSlugAvailability(proUsername);
-      setIsProUser(isProUser);
-
-      // Find and set the matched JSON object
-      const matchedObject = domainsData.domains.find(item => {
-        console.log("Domain:", item.domain, "ProUsername:", item.slug);
-        return item.domain === currentDomain || item.slug === proUsername;
-      });
-      console.log("Matched Object:", matchedObject);
-      setMatchedJsonObject(matchedObject);
-    }
-
-    localStorage.setItem('currentDomain', currentDomain);
-    localStorage.setItem('isDomainAvailable', isDomainAvailable.toString());
-
-    const userExist =
-      localStorage.getItem("token") && localStorage.getItem("user");
-    if (userExist) {
-      setisLoggedIn(true);
-      fetchLikedProperties();
-    } else {
-      setLikedProperties([]);
-    }
-  }, []);
+  const userExist =
+    localStorage.getItem("token") && localStorage.getItem("user");
+  if (userExist) {
+    setisLoggedIn(true);
+    fetchLikedProperties();
+  } else {
+    setLikedProperties([]);
+  }
+}, []);
 
   const handleGetLikedProperty = (ListingKey) =>
     likedProperties?.find(
