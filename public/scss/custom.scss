@@ -31,3 +31,28 @@
         }
     }
 }
+.donation-lander{
+    h1{
+        font-family: poppins;
+        font-size: 36px;
+        font-weight: 900;
+    }
+    .mark-bike-img{
+        float: right;
+        width: 350px;
+    }
+}
+@media (max-width: 525px) {
+    .donation-lander{
+        h1{
+            font-family: poppins;
+            font-size: 24px;
+            font-weight: 900;
+        }
+        .mark-bike-img{
+            float: unset;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+}
