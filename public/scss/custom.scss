@@ -42,6 +42,24 @@
         width: 350px;
     }
 }
+.video-banner{
+    width: 100%;
+}
+.realtor-content{
+    h1{
+        font-family: poppins;
+        font-size: 48px;
+        font-weight: 900;
+    }
+    p{
+        color: #fff;
+        font-family: poppins;
+        font-size: 16px;
+    }
+}
+.realtor-hero{
+    height: 60vh;
+}
 @media (max-width: 525px) {
     .donation-lander{
         h1{
@@ -54,5 +72,13 @@
             width: 100%;
             margin-bottom: 20px;
         }
+    }
+    .realtor-hero{
+        height: 400px;
+    }
+    .video-banner{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
     }
 }

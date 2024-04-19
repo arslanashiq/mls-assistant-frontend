@@ -23,17 +23,34 @@ const Home_V2 = () => {
   return (
     <>
       <Header />
-      <div className='swiper-container'>
+      <div className={currentDomain === "localhost" || currentDomain === "teamrealtor.org" ? 'swiper-container realtor-hero' : "swiper-container"} >
         <div className='swiper-wrapper'>
-          <div className='swiper-slide' style={{backgroundImage: 'url("/images/stock-photo-1.jpg")', height: '500px'}}></div>
-          <div className='swiper-slide' style={{backgroundImage: 'url("/images/stock-photo-4.jpg")', height: '500px'}}></div>
-          <div className='swiper-slide' style={{backgroundImage: 'url("/images/stock-photo-5.jpg")', height: '500px'}}></div>
+          {
+            currentDomain == "localhost" || currentDomain == "teamrealtor.org" ? (
+              <div className='swiper-slide'>
+                <video src="./images/Home - Pan-Mass Challenge.mov" muted autoPlay loop className="video-banner"></video>
+              </div>
+            ) : (<div className='swiper-slide' style={{backgroundImage: 'url("/images/stock-photo-1.jpg")', height: '500px'}}></div>) 
+          }
+          
         </div>
         <div className='swiper-content static'>
           <div className='container'>
             <div className='copy theme lightFontColor'>
-              <h1>The path to success starts here.</h1>
-              <p>Starter is a premium real estate template designed to meet your needs.</p>
+              {
+                currentDomain == "localhost" || currentDomain == "teamrealtor.org" ? (
+                  <div className="realtor-content">
+                    <h1>There’s A Lot Riding On Us</h1>
+                    <p>The PMC&apos;s mission is to raise funds for cancer research and treatment at Dana-Farber Cancer Institute. 100% of every rider-raised dollar goes directly to Dana-Farber. </p>
+              			<stripe-buy-button buy-button-id="buy_btn_1P6exP4RzjdNYvPq0UgPYmTC" publishable-key="pk_live_4UFUvXCy040gK23uKAPXB3L3"></stripe-buy-button>
+                  </div>
+                ) : (
+                    <>
+                      <h1>The path to success starts here.</h1>
+                      <p>Starter is a premium real estate template designed to meet your needs.</p>
+                    </>
+                )
+              }
             </div>
           </div>
         </div>
