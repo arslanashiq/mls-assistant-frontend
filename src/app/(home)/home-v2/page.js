@@ -23,7 +23,7 @@ const Home_V2 = () => {
   return (
     <>
       <Header />
-      <div className={currentDomain === "localhost" || currentDomain === "teamrealtor.org" ? 'swiper-container realtor-hero' : "swiper-container"} >
+      <div className={currentDomain === "localhost" || currentDomain === "teamrealtor.org" ? 'swiper-container realtor-hero' : "swiper-container "} >
         <div className='swiper-wrapper'>
           {
             currentDomain == "localhost" || currentDomain == "teamrealtor.org" ? (

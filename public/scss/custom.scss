@@ -60,7 +60,7 @@
     }
 }
 .realtor-hero{
-    height: 60vh;
+    height: 60vh !important;
 }
 @media (max-width: 525px) {
     .donation-lander{
@@ -76,7 +76,7 @@
         }
     }
     .realtor-hero{
-        height: 400px;
+        height: 400px !important;
     }
     .video-banner{
         height: 100%;
