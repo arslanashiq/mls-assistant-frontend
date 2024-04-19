@@ -8,7 +8,7 @@ import React from "react";
 import Footer from "@/components/common/default-footer";
 
 export const metadata = {
-  title: "Map V4 || Homez - Real Estate NextJS Template",
+  title: "MLS Assistant || Properties",
 };
 
 const MapV4 = () => {
