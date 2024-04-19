@@ -72,18 +72,18 @@ function AppContext({ children }) {
   // Check if pro username is set in localStorage
   const proUsernameLocalStorage = localStorage.getItem('proUsername');
 
-  if (proUsernameLocalStorage) {
-    // If pro username is found in localStorage
-    setProUsername(proUsernameLocalStorage);
+  // if (proUsernameLocalStorage) {
+  //   // If pro username is found in localStorage
+  //   setProUsername(proUsernameLocalStorage);
 
-    // Check if the pro username is available
-    const isProUser = checkProSlugAvailability(proUsernameLocalStorage);
-    setIsProUser(isProUser);
+  //   // Check if the pro username is available
+  //   const isProUser = checkProSlugAvailability(proUsernameLocalStorage);
+  //   setIsProUser(isProUser);
 
-    // Find and set the matched JSON object for pro user
-    const matchedObject = domainsData.domains.find(item => item.slug === proUsernameLocalStorage);
-    setMatchedJsonObject(matchedObject);
-  } else {
+  //   // Find and set the matched JSON object for pro user
+  //   const matchedObject = domainsData.domains.find(item => item.slug === proUsernameLocalStorage);
+  //   setMatchedJsonObject(matchedObject);
+  // } else {
     // If pro username is not set in localStorage, proceed with checking domain
 
     // Check if the domain is available
@@ -93,7 +93,7 @@ function AppContext({ children }) {
     // Find and set the matched JSON object for domain
     const matchedObject = domainsData.domains.find(item => item.domain === currentDomain);
     setMatchedJsonObject(matchedObject);
-  }
+  // }
 
   localStorage.setItem('currentDomain', currentDomain);
   localStorage.setItem('isDomainAvailable', isDomainAvailable.toString());
