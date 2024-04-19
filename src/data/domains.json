@@ -15,6 +15,20 @@
       "logoWidth": "80"
     },
     {
+      "domain": "192.168.100.2",
+      "data": "Data for teamrealtor.org",
+      "slug": "markholt",
+      "title": "Team Realtor",
+      "name": "Mark Holt",
+      "email": "mark@mlsassistant.com",
+      "logo": "images/mls-assistant.png",
+      "phone": "203-933-2500 EXT.303",
+      "mobile": "(203)933-2500",
+      "officeName": "Team Realtor",
+      "websiteContent": "",
+      "logoWidth": "80"
+    },
+    {
       "domain": "localhost",
       "data": "Data for localhost",
       "slug": "markholt",
