@@ -429,6 +429,7 @@ export default function PropertyFilteringMapFive({ data }) {
       const sorted = [...filteredData].sort(
         (a, b) => a.yearBuilding - b.yearBuilding
       );
+      setAllData([])
       setSortedFilteredData(sorted);
     } else if (currentSortingOption.trim() == "Price Low") {
       const sorted = [...filteredData].sort(
@@ -442,6 +443,7 @@ export default function PropertyFilteringMapFive({ data }) {
             .split(",")
             .join("")
       );
+      setAllData([])
       setSortedFilteredData(sorted);
     } else if (currentSortingOption.trim() == "Price High") {
       const sorted = [...filteredData].sort(
@@ -455,8 +457,10 @@ export default function PropertyFilteringMapFive({ data }) {
             .split(",")
             .join("")
       );
+      setAllData([])
       setSortedFilteredData(sorted);
     } else {
+      setAllData([])
       setSortedFilteredData(filteredData);
     }
   }, [filteredData, currentSortingOption]);
