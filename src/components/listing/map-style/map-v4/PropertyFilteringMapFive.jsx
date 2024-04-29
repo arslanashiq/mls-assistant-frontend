@@ -74,6 +74,7 @@ export default function PropertyFilteringMapFive({ data }) {
     setPriceRange([0, 0]);
     setBedrooms(0);
     setBathroms(0);
+    setTotalData(0);
     setLocation("All Cities");
     setSquirefeet([]);
     setyearBuild([0, 2050]);
@@ -206,15 +207,71 @@ export default function PropertyFilteringMapFive({ data }) {
     setLoading(true);
     setPageNumber(selectedPage.selected + 1); // Add 1 to account for 0-based indexing
   };
+    useEffect(() => {
+      setPageNumber(1);
+      setAllData([])
+      setTotalData(0);
+      setTotalItemsLoaded(0);
+    if (currentSortingOption == "Newest") {
+      const sorted = [...filteredData].sort(
+        (a, b) => a.yearBuilding - b.yearBuilding
+      );
+      setAllData([])
+      setTotalData(0);
+      setTotalItemsLoaded(0);
+      console.log("setting new 0", totalItemsLoaded);
+    } else if (currentSortingOption.trim() == "Price Low") {
+      const sorted = [...filteredData].sort(
+        (a, b) =>
+          a.price
+            .split("$")[1]
+            .split(",")
+            .join("") -
+          b.price
+            .split("$")[1]
+            .split(",")
+            .join("")
+      );
+      setAllData([])
+      setTotalData(0);
+      setTotalItemsLoaded(0);
+      console.log("setting old 0", totalItemsLoaded);
+    } else if (currentSortingOption.trim() == "Price High") {
+      const sorted = [...filteredData].sort(
+        (a, b) =>
+          b.price
+            .split("$")[1]
+            .split(",")
+            .join("") -
+          a.price
+            .split("$")[1]
+            .split(",")
+            .join("")
+      );
+      setAllData([])
+      setTotalData(0);
+      setTotalItemsLoaded(0);
+      console.log("setting ph 0", totalItemsLoaded);
+    } else {
+      setAllData([])
+      setTotalData(0);
+      setTotalItemsLoaded(0);
+      console.log("setting pl 0", totalItemsLoaded);
+    }
+  }, []);
   const handlelistingStatus = (elm) => {
     setLoading(true);
     setAllData([])
+    setTotalData(0);
+    setTotalItemsLoaded(0);
     setListingStatus((pre) => (pre == elm ? "All" : elm));
   };
 
   const handlepropertyTypes = (elm) => {
     setLoading(true);
     setAllData([])
+    setTotalItemsLoaded(0);
+    setTotalData(0);
     if (elm == "All") {
       setPropertyTypes([]);
     } else {
@@ -225,37 +282,51 @@ export default function PropertyFilteringMapFive({ data }) {
   };
   const handlepriceRange = (elm) => {
     setLoading(true);
+    setTotalData(0);
+    setTotalItemsLoaded(0);
     setAllData([])
     setPriceRange(elm);
   };
   const handlebedrooms = (elm) => {
     setLoading(true);
+    setTotalItemsLoaded(0);
     setAllData([])
+    setTotalData(0);
     setBedrooms(elm);
   };
   const handlebathroms = (elm) => {
     setLoading(true);
     setAllData([])
+    setTotalItemsLoaded(0);
+    setTotalData(0);
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
     setLoading(true);
     setAllData([])
+    setTotalItemsLoaded(0);
+    setTotalData(0);
     setLocation(elm);
   };
   const handlesquirefeet = (elm) => {
     setLoading(true);
     setAllData([])
+    setTotalItemsLoaded(0);
+    setTotalData(0);
     setSquirefeet(elm);
   };
   const handleyearBuild = (elm) => {
     setLoading(true);
     setAllData([])
+    setTotalItemsLoaded(0);
+    setTotalData(0);
     setyearBuild(elm);
   };
   const handlecategories = (elm) => {
     setLoading(true);
     setAllData([])
+    setTotalItemsLoaded(0);
+    setTotalData(0);
     if (elm == "All") {
       setCategories([]);
     } else {
@@ -267,16 +338,19 @@ export default function PropertyFilteringMapFive({ data }) {
   const handleActiveStatus = (status) => {
     setLoading(true);
     setAllData([])
+    setTotalItemsLoaded(0);
+    setTotalData(0);
     setActiveStatus(status);
   };
   const handleSearch = (value) => {
     setLoading(true);
     setAllData([])
+    setTotalItemsLoaded(0);
+    setTotalData(0);
     setSearchQuery(value);
     setPageNumber(1); // Reset page number to 1 when performing a new search
     setTotalItemsLoaded(0); // Reset total items loaded when performing a new search
   };
-  console.log("All Data" , allData)
   const handleClickProperty = (listing) => {
     localStorage.setItem("currentUrl", window.location.href);
     sessionStorage.setItem(
@@ -293,6 +367,7 @@ export default function PropertyFilteringMapFive({ data }) {
       ...localSearchObject,
       address: searchQuery || splitPropertyAddress(0) || "",
     };
+    fetchData();
     // return;
     router.replace(`${pathName}?address=${newObject.address}`);
     setLoading(false);
@@ -329,7 +404,9 @@ export default function PropertyFilteringMapFive({ data }) {
     handleClickProperty,
     setLoading,
     loading,
-    setAllData
+    setAllData,
+    setTotalItemsLoaded,
+    setTotalData
   };
   const getSearchFromStates = () => {
     return {
@@ -346,6 +423,7 @@ export default function PropertyFilteringMapFive({ data }) {
       currentSortingOption,
     };
   };
+  
   const fetchData = async () => {
     try {
       let apiUrl =
@@ -361,6 +439,7 @@ export default function PropertyFilteringMapFive({ data }) {
 
       //   getFilterStringForParams(); // Moved outside the fetchData function
       // }
+      console.log(apiUrl);
 
       const response = await axios.get(apiUrl, {
         headers: {
@@ -402,19 +481,19 @@ export default function PropertyFilteringMapFive({ data }) {
     currentSortingOption,
     searchQuery,
   ]); // Ensure correct dependencies are included
-  useEffect(() => {
-    setPageItems(
-      sortedFilteredData.slice(
-        (pageNumber - 1) * itemsPerPage,
-        pageNumber * itemsPerPage
-      )
-    );
-    setPageContentTrac([
-      (pageNumber - 1) * itemsPerPage + 1,
-      pageNumber * itemsPerPage,
-      sortedFilteredData.length,
-    ]);
-  }, [pageNumber, sortedFilteredData]);
+  // useEffect(() => {
+  //   setPageItems(
+  //     sortedFilteredData.slice(
+  //       (pageNumber - 1) * itemsPerPage,
+  //       pageNumber * itemsPerPage
+  //     )
+  //   );
+  //   setPageContentTrac([
+  //     (pageNumber - 1) * itemsPerPage + 1,
+  //     pageNumber * itemsPerPage,
+  //     sortedFilteredData.length,
+  //   ]);
+  // }, [pageNumber, sortedFilteredData]);
 
   useEffect(() => {
     const search = searchParams.get("address");
@@ -423,47 +502,7 @@ export default function PropertyFilteringMapFive({ data }) {
     }
   }, []); // Empty dependency array ensures this effect runs only once when the component mounts
 
-  useEffect(() => {
-    setPageNumber(1);
-    if (currentSortingOption == "Newest") {
-      const sorted = [...filteredData].sort(
-        (a, b) => a.yearBuilding - b.yearBuilding
-      );
-      setAllData([])
-      setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price Low") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          a.price
-            .split("$")[1]
-            .split(",")
-            .join("") -
-          b.price
-            .split("$")[1]
-            .split(",")
-            .join("")
-      );
-      setAllData([])
-      setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price High") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          b.price
-            .split("$")[1]
-            .split(",")
-            .join("") -
-          a.price
-            .split("$")[1]
-            .split(",")
-            .join("")
-      );
-      setAllData([])
-      setSortedFilteredData(sorted);
-    } else {
-      setAllData([])
-      setSortedFilteredData(filteredData);
-    }
-  }, [filteredData, currentSortingOption]);
+
 
   const handleSavedSarchToState = () => {
     let newSavedSearch = {};

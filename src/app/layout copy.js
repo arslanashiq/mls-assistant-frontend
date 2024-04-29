@@ -77,7 +77,7 @@ export default function RootLayout({ children }) {
     });
   
     const response = result.response;
-    console.log(response.text());
+    //console.log(response.text());
   }
   const [buyingInfo, setBuyingInfo] = useState({
     city: "",

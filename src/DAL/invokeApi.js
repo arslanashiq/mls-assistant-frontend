@@ -31,15 +31,15 @@ export async function invokeApi({
 
   let results;
 
-  console.log("<===REQUEST-OBJECT===>", reqObj);
+  //console.log("<===REQUEST-OBJECT===>", reqObj);
 
   try {
     results = await axios(reqObj);
-    console.log("<===Api-Success-Result===>", results);
+    //console.log("<===Api-Success-Result===>", results);
 
     return results.data;
   } catch (error) {
-    console.log("<===Api-Error===>", error.response.data);
+    //console.log("<===Api-Error===>", error.response.data);
 
     if (error.response.status === 401) {
       localStorage.clear();

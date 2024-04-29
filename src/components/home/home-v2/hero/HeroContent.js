@@ -37,7 +37,8 @@ const HeroContent = () => {
     if (value.trim() !== "") {
       debounce(() => {
         fetchSuggestions(value);
-      }, 150);
+        fetchBridgesSuggestions(value);
+      }, 500);
     } else {
       setShowSuggestions(false);
     }
@@ -67,6 +68,7 @@ const HeroContent = () => {
             setShowSuggestions(true);
             setIsGoogleSuggestion(true);
           } else {
+            setIsBridgeSuggestion(false)
             setIsGoogleSuggestion(false);
             fetchBridgesSuggestions(value);
           }
@@ -78,6 +80,7 @@ const HeroContent = () => {
   };
 
   const getCitiesDataFromBridgeApiResponse = (data) => {
+    //console.log(data);
     return data.map((property) => ({
       name: property.UnparsedAddress,
       id: property.ListingKey,
@@ -86,12 +89,14 @@ const HeroContent = () => {
   const fetchBridgesSuggestions = async (value) => {
     try {
       const response = await fetch(
-        `https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property?access_token=23c8729a55e9986ae45ca71d18a3742c&$filter=contains(tolower(UnparsedAddress), tolower('${value}'))&$select=UnparsedAddress`
+        `https://api.bridgedataoutput.com/api/v2/mlspin/listings?access_token=23c8729a55e9986ae45ca71d18a3742c&fields=UnparsedAddress&UnparsedAddress.in=${value}`
+        // `https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property?access_token=23c8729a55e9986ae45ca71d18a3742c&$filter=contains(tolower(UnparsedAddress), tolower('${value}'))&$select=UnparsedAddress`
       );
       const data = await response.json();
-      if (data.value.length > 0) {
+      if (data.bundle.length > 0) {
         setIsBridgeSuggestion(true)
-        setCities(getCitiesDataFromBridgeApiResponse(data.value));
+        getCitiesDataFromBridgeApiResponse(data.bundle)
+        setCities(getCitiesDataFromBridgeApiResponse(data.bundle));
         setShowSuggestions(true);
       } else {
         setShowSuggestions(false);
@@ -121,7 +126,7 @@ const HeroContent = () => {
     return selectedSuggestion?.replace(/,\s*/g, " ");
   };
   const handleGetPropertyId = (selectedCity) => {
-    console.log(selectedCity);
+    //console.log(selectedCity);
     if (selectedCity?.id) {
       return `&propertyId=${selectedCity.id}`;
     }
@@ -185,6 +190,7 @@ const HeroContent = () => {
       searchInputRef.current.focus();
     }
   }, [showModal]);
+  console.log(isGoogleSuggestion, isBridgeSuggestion)
   return (
     <>
     <main className='index' role='main'>

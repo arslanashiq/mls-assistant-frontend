@@ -29,7 +29,7 @@ const CustomTooltip = ({ active, payload }) => {
 const HomeValueChart = ({ page_data }) => {
   const postalCode = page_data?.PostalCode.substring(0, 3);
   const listPrice = page_data?.ListPrice;
-  console.log(postalCode, listPrice);
+  //console.log(postalCode, listPrice);
   const [chartData, setChartData] = useState([]);
   const [filteredChartData, setFilteredChartData] = useState([]);
   const [filter, setFilter] = useState("max");
@@ -40,7 +40,7 @@ const HomeValueChart = ({ page_data }) => {
         const postalCode = page_data?.PostalCode.substring(0, 3);
         // const postalCode = page_data?.PostalCode
         const listPrice = page_data?.ListPrice;
-        console.log(postalCode, listPrice);
+        //console.log(postalCode, listPrice);
         const response = await fetch(
           `https://fhfa-hpi-backend.vercel.app/get-data?zipCode=${postalCode}&estimatedprice=${listPrice}`
         );
@@ -55,7 +55,7 @@ const HomeValueChart = ({ page_data }) => {
           const adjustedPrice = (estimatedPrice * item.index_NSA) / (lastIndex);
           return { year: item.year, quarter: item.quarter, adjustedPrice };
         });
-        // console.log('chart - adjustedPrices', adjustedPrices)
+        // //console.log('chart - adjustedPrices', adjustedPrices)
 
         // Adjusted prices are currently mapped to years in the API response
         // We need to map them to years based on the current year
@@ -71,7 +71,7 @@ const HomeValueChart = ({ page_data }) => {
             adjustedPrice: item.adjustedPrice,
           };
         });
-        console.log('chart - adjustedPricesWithCorrectYears', adjustedPricesWithCorrectYears)
+        //console.log('chart - adjustedPricesWithCorrectYears', adjustedPricesWithCorrectYears)
         /*est start*/
         // Split your data into training and testing sets
         let timeSeriesData = JSON.parse(JSON.stringify(adjustedPricesWithCorrectYears))
@@ -111,7 +111,7 @@ const HomeValueChart = ({ page_data }) => {
         // const squaredErrors = predictions.map((predicted, i) => Math.pow(predicted - testingData[i].adjustedPrice, 2));
         // const meanSquaredError = squaredErrors.reduce((sum, error) => sum + error, 0) / squaredErrors.length;
 
-        // console.log('Mean Squared Error:', meanSquaredError);
+        // //console.log('Mean Squared Error:', meanSquaredError);
         /*est end*/
 
         // Reverse the order of the data array so that it starts from 1995 and ends in 2023

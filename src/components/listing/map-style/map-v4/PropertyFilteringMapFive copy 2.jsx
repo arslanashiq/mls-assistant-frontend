@@ -146,7 +146,7 @@ export default function PropertyFilteringMapFive({ data }) {
 
 				apiUrl += `${filterString}&$orderby=${orderBy}`;
 
-				console.log(apiUrl);
+				//console.log(apiUrl);
 
 				const response = await axios.get(apiUrl, {
 					headers: {
@@ -192,7 +192,7 @@ export default function PropertyFilteringMapFive({ data }) {
 	};
 
 	const handlepropertyTypes = (elm) => {
-		console.log(elm)
+		//console.log(elm)
 		if (elm == "All") {
 		setPropertyTypes([]);
 		} else {

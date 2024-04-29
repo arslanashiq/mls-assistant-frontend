@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { request_tour_form } from "@/DAL/save-property";
 import { useSnackbar } from "notistack";
 const ScheduleForm = ({ page_data, type, setOpen, setOpenInfo }) => {
-  console.log(page_data);
+  //console.log(page_data);
   const {
     isLoggedIn,
     handleOpenLoginModal,

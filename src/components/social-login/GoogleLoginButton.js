@@ -56,7 +56,7 @@ function GoogleLoginButton({ handleCloseLoginModal = () => {} }) {
       <GoogleLogin
         onSuccess={handleSuccessGoogleLogin}
         onError={() => {
-          console.log("Login Failed");
+          //console.log("Login Failed");
         }}
         type="standard"
         size="large"

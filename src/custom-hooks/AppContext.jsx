@@ -121,7 +121,7 @@ function AppContext({ children }) {
       }
       if (!property) return;
       delete property["@odata.id"];
-      console.log(property, "asaasaa");
+      //console.log(property, "asaasaa");
       const payload = {
         property_data: {
           data: property,
@@ -135,7 +135,7 @@ function AppContext({ children }) {
       }
       fetchLikedProperties();
     } catch (error) {
-      console.log("Somthing Went Wrong");
+      //console.log("Somthing Went Wrong");
     }
   };
   const handleUnLikeProperty = async (property) => {
@@ -174,7 +174,7 @@ function AppContext({ children }) {
         sendMail: 1,
         currentSite: currentSite
       };
-      console.log(payload);
+      //console.log(payload);
       const response = await share_property_via_email(payload);
       if (response.code == 200) {
         enqueueSnackbar(`Property shared to ${payload?.receiver_email}`, {
@@ -184,7 +184,7 @@ function AppContext({ children }) {
         handleClose();
       }
     } catch (error) {
-      console.log("Error while sharing property");
+      //console.log("Error while sharing property");
     }
   };
   const getPropertyAddress = ({ UnparsedAddress, ListingKey }) => {

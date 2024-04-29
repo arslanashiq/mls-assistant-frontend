@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { filter } from "@/data/mobileMenuItems";
 import { RotatingLines } from 'react-loader-spinner';
 
-const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCurrentSortingOption, handleClickProperty }) => {
+const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCurrentSortingOption, handleClickProperty, totalCount }) => {
   const options = [
     { id: "flexRadioDefault0", label: "All", value: "All" },
     { id: "flexRadioDefault1", label: "Active", value: "Active", defaultChecked: true },
@@ -115,6 +115,9 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setSearchTerm(value);
+    filterFunctions.setAllData([]);
+    filterFunctions.setTotalItemsLoaded(0);
+    filterFunctions.setTotalData(0);
     if (value.trim() !== "") {
       debounce(() => {
         fetchSuggestions(value);
@@ -167,12 +170,13 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
   const fetchBridgesSuggestions = async (value) => {
     try {
       const response = await fetch(
-        `https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property?access_token=23c8729a55e9986ae45ca71d18a3742c&$filter=contains(tolower(UnparsedAddress), tolower('${value}'))&$select=UnparsedAddress`
+        `https://api.bridgedataoutput.com/api/v2/mlspin/listings?access_token=23c8729a55e9986ae45ca71d18a3742c&fields=UnparsedAddress&UnparsedAddress.in=${value}`
+        // `https://api.bridgedataoutput.com/api/v2/OData/mlspin/Property?access_token=23c8729a55e9986ae45ca71d18a3742c&$filter=contains(tolower(UnparsedAddress), tolower('${value}'))&$select=UnparsedAddress`
       );
       const data = await response.json();
-      if (data.value.length > 0) {
+      if (data.bundle.length > 0) {
         setIsBridgeSuggestion(true)
-        setCities(getCitiesDataFromBridgeApiResponse(data.value));
+        setCities(getCitiesDataFromBridgeApiResponse(data.bundle));
         setShowSuggestions(true);
       } else {
         setShowSuggestions(false);
@@ -264,7 +268,12 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       return null; // Return null in case of error
     }
   };
-
+  function handleSorting(value) {
+    filterFunctions.setAllData([]);
+    filterFunctions.setTotalItemsLoaded(0);
+    filterFunctions.setTotalData(0);
+    setCurrentSortingOption(value);
+  }
   return (
     <>
       {
@@ -297,7 +306,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
             </div>
             <div className="mt-2 mb-2 d-flex justify-content-between align-items-center">
               <p className="p0 m0">
-                {propertyCount} Results
+                {totalCount} Results
               </p>
               <div className="d-flex">
                 <SaveSearchMenu
@@ -308,7 +317,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
 
                 <div className="pcs_dropdown d-flex align-items-center justify-content-end">
                   <i className="fa-solid fa-arrow-down-short-wide"></i>
-                  <select className="form-select" onChange={(e) => setCurrentSortingOption && setCurrentSortingOption(e.target.value)}>
+                  <select className="form-select" onChange={(e)=> handleSorting(e.target.value)}>
                     <option>Newest</option>
                     <option>Oldest</option>
                     <option>Price Low</option>

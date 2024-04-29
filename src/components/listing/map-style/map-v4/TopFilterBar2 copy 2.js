@@ -234,17 +234,17 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
     let selectedCity = handleGetSelectedCity(cities);
     if (selectedSuggestion) {
       const [city, state] = selectedSuggestion.split(",").map((item) => item.trim());
-      console.log("Navigate directly to properties page based selected");
-      console.log(selectedSuggestion);
+      //console.log("Navigate directly to properties page based selected");
+      //console.log(selectedSuggestion);
       filterFunctions.setSearchQuery(handleGetAddress(selectedCity));
     } else if (isGoogleSuggestion) {
-      console.log("Navigate directly to properties page based on google code");
+      //console.log("Navigate directly to properties page based on google code");
       const [city, state] = selectedSuggestion
       .split(",")
         .map((item) => item.trim());
       filterFunctions.setSearchQuery(handleGetAddress(selectedCity));
     } else if (isZipCode) {
-      console.log("Navigate directly to properties page based on zip code");
+      //console.log("Navigate directly to properties page based on zip code");
       filterFunctions.setSearchQuery(handleGetAddress(searchTerm));
       // router.push(
       //   `/properties?address=${encodeURIComponent(
@@ -252,7 +252,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       //   )}&listingStatus=${activeTab}`
       // );
     } else {
-      console.log("Navigate based on bridges suggestion");
+      //console.log("Navigate based on bridges suggestion");
       // const [city, state, postalCode] = searchTerm
       //   .split(",")
       //   .map((item) => item.trim());
@@ -274,7 +274,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
       //       getCitiesDataFromBridgeApiResponse(data.value)
       //     );
       //   }
-      //   console.log(data);
+      //   //console.log(data);
       //   // router.push(
       //   //   `/properties?address=${encodeURIComponent(
       //   //     handleGetSearchTerm(selectedCity)
@@ -286,7 +286,7 @@ const TopFilterBar2 = ({ filterFunctions, getFilterString, propertyCount, setCur
     }
   };
 
-  console.log(searchTerm);
+  //console.log(searchTerm);
 
 
 

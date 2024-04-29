@@ -25,7 +25,7 @@ function Example() {
 
         // Send user's message to Gemini
         const geminiResponse = await generateContent(message.text);
-        console.log(geminiResponse);
+        //console.log(geminiResponse);
         const response = JSON.parse(geminiResponse);
         const geminiMessage = response.message;
 

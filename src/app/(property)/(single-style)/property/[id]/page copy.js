@@ -32,7 +32,7 @@ import axios from "axios";
 // };
 
 const SingleV2 = ({ params }) => {
-  // console.log(params.id);
+  // //console.log(params.id);
   const [data, setData] = useState(null);
 
   useEffect(() => {

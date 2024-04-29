@@ -12,6 +12,12 @@ const TopFilterBar = ({ setCurrentSortingOption, colstyle, setColstyle, pageCont
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  function handleSorting(value) {
+    filterFunctions.setAllData([]);
+    filterFunctions.setTotalItemsLoaded(0);
+    filterFunctions.setTotalData(0);
+    setCurrentSortingOption(value);
+  }
   return (
     <>
       {
@@ -39,7 +45,7 @@ const TopFilterBar = ({ setCurrentSortingOption, colstyle, setColstyle, pageCont
                 <div className="page_control_shorting d-flex align-items-center justify-content-center justify-content-sm-end">
                   <div className="pcs_dropdown pr10 d-flex align-items-center">
                     <span style={{ minWidth: "60px" }}>Sort by</span>
-                    <select className="form-select"  onChange={(e)=>setCurrentSortingOption && setCurrentSortingOption(e.target.value)}>
+                    <select className="form-select"  onChange={(e)=> handleSorting(e.target.value)}>
                       <option>Newest</option>
                       <option>Oldest</option>
                       <option>Price Low</option>

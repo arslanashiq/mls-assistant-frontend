@@ -105,7 +105,7 @@ export default function ProperteyFiltering(city, postalCode, filterFunctions) {
     },
   };
 
-  console.log(city);
+  //console.log(city);
 useEffect(() => {
   const fetchData = async () => {
     try {
@@ -151,7 +151,7 @@ useEffect(() => {
       }
 
       apiUrl += filterString;
-      console.log(apiUrl);
+      //console.log(apiUrl);
 
       const response = await axios.get(apiUrl, {
         headers: {
@@ -160,7 +160,7 @@ useEffect(() => {
       });
 
       setDataValue(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

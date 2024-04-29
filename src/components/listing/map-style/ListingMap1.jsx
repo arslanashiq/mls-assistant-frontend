@@ -216,7 +216,7 @@ export default function ListingMap1({ listings, handleClickProperty }) {
 
   // add long & lat
   const locationHandler = (location) => {
-    console.log("location"+location);
+    //console.log("location"+location);
     setLocation(location);
     if (map) {
       map.panTo({

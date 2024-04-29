@@ -191,7 +191,7 @@ const containerStyle = {
   height: "100%",
 };
 export default function ListingMap1({ listings }) {
-  console.log(listings)
+  //console.log(listings)
   const [getLocation, setLocation] = useState(null);
 
   const { isLoaded } = useLoadScript({

@@ -191,7 +191,7 @@ const containerStyle = {
   height: "100%",
 };
 export default function ListingMap1({ listings }) {
-  console.log(listings)
+  //console.log(listings)
   const [getLocation, setLocation] = useState(null);
 
   const { isLoaded } = useLoadScript({
@@ -204,7 +204,7 @@ export default function ListingMap1({ listings }) {
 
   // add long & lat
   const locationHandler = (location) => {
-    console.log("location"+location);
+    //console.log("location"+location);
     setLocation(location);
     if (map) {
       map.panTo({

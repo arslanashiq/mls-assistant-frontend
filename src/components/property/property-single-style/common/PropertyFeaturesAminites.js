@@ -5,7 +5,7 @@ const PropertyFeaturesAminites = ({ page_data }) => {
     return null; // or handle loading state
   }
 
-  console.log(page_data, "---page_datapage_data");
+  //console.log(page_data, "---page_datapage_data");
 
   const featuresAmenitiesData = [
     ["Air Conditioning", "Barbeque", "Dryer", "Gym"],

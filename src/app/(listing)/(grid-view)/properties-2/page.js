@@ -18,7 +18,7 @@ const GridFull3Col = () => {
         `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyCbULP7ohg0MYQSZIUm4m_TdiAjHhjN3Ds`
       );
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       if (data.status === "OK") {
         const cityNames = data.results.map((result) => {
           let city = "";
@@ -35,7 +35,7 @@ const GridFull3Col = () => {
           return `${city}, ${zipCode}`;
         });
       } else {
-        console.log("Zero results or error occurred");
+        //console.log("Zero results or error occurred");
       }
     };
     handleInputChange(search);

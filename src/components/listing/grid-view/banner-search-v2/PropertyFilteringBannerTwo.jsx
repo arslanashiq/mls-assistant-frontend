@@ -84,7 +84,7 @@ export default function PropertyFilteringBannerTwo() {
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
-    console.log(elm);
+    //console.log(elm);
     setLocation(elm);
   };
   const handlesquirefeet = (elm) => {

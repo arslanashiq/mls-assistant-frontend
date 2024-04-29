@@ -82,7 +82,7 @@ export default function PropertyFiltering() {
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
-    console.log(elm);
+    //console.log(elm);
     setLocation(elm);
   };
   const handlesquirefeet = (elm) => {
@@ -199,7 +199,7 @@ export default function PropertyFiltering() {
     }
 
     if (squirefeet.length > 0 && squirefeet[1]) {
-      console.log(squirefeet);
+      //console.log(squirefeet);
       const filtered = refItems.filter(
         (elm) =>
           elm.sqft >= Number(squirefeet[0]) && elm.sqft <= Number(squirefeet[1])

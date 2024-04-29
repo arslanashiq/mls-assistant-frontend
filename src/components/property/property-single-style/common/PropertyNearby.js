@@ -5,7 +5,7 @@ const PropertyNearby = ({ page_data }) => {
   const [educationData, setEducationData] = useState([]);
   const [healthMedicalData, setHealthMedicalData] = useState([]);
   const [transportationData, setTransportationData] = useState([]);
-  console.log(educationData, healthMedicalData, transportationData)
+  //console.log(educationData, healthMedicalData, transportationData)
   const tabsData = [
     {
       title: "Education",

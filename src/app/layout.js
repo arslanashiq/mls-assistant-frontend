@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
     // Set a callback to handle script loading completion
     googleMapsScript.onload = () => {
       // Initialize any components or logic that depend on Google Maps API here
-      console.log("Google Maps API script loaded successfully");
+      //console.log("Google Maps API script loaded successfully");
     };
     // Append the script element to the document body
     document.body.appendChild(googleMapsScript);

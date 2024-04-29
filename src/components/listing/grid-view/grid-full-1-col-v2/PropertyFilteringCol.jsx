@@ -86,7 +86,7 @@ export default function PropertyFilteringCol() {
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
-    console.log(elm);
+    //console.log(elm);
     setLocation(elm);
   };
   const handlesquirefeet = (elm) => {

@@ -24,7 +24,7 @@ const DesktopSearch = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log(isMobile)
+  //console.log(isMobile)
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
@@ -149,7 +149,7 @@ const DesktopSearch = () => {
     const isZipCode = /^\d{5}(?:[-\s]\d{4})?$/.test(searchTerm.trim());
     let selectedCity = handleGetSelectedCity(cities);
     if (selectedSuggestion) {
-      // console.log("Navigate based on selected suggestion");
+      // //console.log("Navigate based on selected suggestion");
       const [city, state] = selectedSuggestion
         .split(",")
         .map((item) => item.trim());
@@ -159,7 +159,7 @@ const DesktopSearch = () => {
         )}&activeTab=${activeTab}${handleGetPropertyId(selectedCity)}`
       );
     } else if (isGoogleSuggestion) {
-      // console.log("Navigate based on Google suggestion");
+      // //console.log("Navigate based on Google suggestion");
       router.push(
         `/properties?address=${encodeURIComponent(
           searchTerm
@@ -171,14 +171,14 @@ const DesktopSearch = () => {
         }`
       );
     } else if (isZipCode) {
-      // console.log("Navigate directly to properties page based on zip code");
+      // //console.log("Navigate directly to properties page based on zip code");
       router.push(
         `/properties?address=${encodeURIComponent(
           searchTerm
         )}&activeTab=${activeTab}`
       );
     } else {
-      // console.log("Navigate based on bridges suggestion");
+      // //console.log("Navigate based on bridges suggestion");
       const [city, state, postalCode] = searchTerm
         .split(",")
         .map((item) => item.trim());

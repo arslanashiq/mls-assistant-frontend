@@ -10,7 +10,6 @@ import DashbaordHeaderProfile from "@/components/common/DashbaordHeaderProfile";
 
 const Header = () => {
   const { isLoggedIn, handleOpenLoginModal, currentDomain, isDomainAvailable, proUsername, isProUser, matchedJsonObject } = useAppContext();
-  console.log(currentDomain, isDomainAvailable, proUsername, isProUser, matchedJsonObject);
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {

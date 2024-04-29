@@ -25,7 +25,7 @@ function Example() {
         setMessages(prevMessages => [...prevMessages, newMessage]);
         try {
             const geminiResponse = await run(message.text);;
-            console.log(geminiResponse);
+            //console.log(geminiResponse);
             if (geminiResponse) {
                 const response = JSON.parse(geminiResponse);
                 const geminiMessage = {

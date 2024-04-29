@@ -148,7 +148,7 @@ const HeroContent = () => {
       // Check if a suggestion is selected
 
       // &propertyId=${properties[indexOfSuggestion]}
-      console.log("Navigate based on selected suggestion");
+      //console.log("Navigate based on selected suggestion");
       const [city, state] = selectedSuggestion
         .split(",")
         .map((item) => item.trim());
@@ -159,7 +159,7 @@ const HeroContent = () => {
       );
     } else if (isGoogleSuggestion) {
       // Check if the suggestion is from Google
-      console.log("Navigate based on Google suggestion");
+      //console.log("Navigate based on Google suggestion");
       router.push(
         `/properties?address=${encodeURIComponent(
           searchTerm
@@ -172,14 +172,14 @@ const HeroContent = () => {
       );
     } else if (isZipCode) {
       // Check if it's a valid zip code
-      console.log("Navigate directly to properties page based on zip code");
+      //console.log("Navigate directly to properties page based on zip code");
       router.push(
         `/properties?address=${encodeURIComponent(
           searchTerm
         )}&activeTab=${activeTab}`
       );
     } else {
-      console.log("Navigate based on bridges suggestion");
+      //console.log("Navigate based on bridges suggestion");
       const [city, state, postalCode] = searchTerm
         .split(",")
         .map((item) => item.trim());
@@ -201,7 +201,7 @@ const HeroContent = () => {
             getCitiesDataFromBridgeApiResponse(data.value)
           );
         }
-        console.log(data.value, "firstfirstfirstfirstfirstfirstfirst");
+        //console.log(data.value, "firstfirstfirstfirstfirstfirstfirst");
         // if (data.value.length > 0) {
         //     router.push(`/property/${data.value[0].ListingKey}`);
         // } else {

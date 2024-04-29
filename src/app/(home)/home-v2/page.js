@@ -18,8 +18,6 @@ export const metadata = {
 
 const Home_V2 = () => {
   const { isLoggedIn, handleOpenLoginModal, currentDomain, isDomainAvailable, proUsername, isProUser, matchedJsonObject } = useAppContext();
-  console.log(matchedJsonObject);
-
   return (
     <>
       <Header />

@@ -90,8 +90,6 @@ export default function PropertyDetailModal({
 
     fetchAgentOfficeData();
   }, [data]);
-  // Retrieve current URL from localStorage
-  console.log(data);
   return (
     <React.Fragment>
       {/* Signup Modal */}

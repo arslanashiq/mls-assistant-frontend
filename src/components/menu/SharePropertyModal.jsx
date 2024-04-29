@@ -54,7 +54,7 @@ export default function SharePropertyModal({
         setSenderEmailDisabled(true)
       }
     } catch (error) {
-      console.log("Error Parsing User Data");
+      //console.log("Error Parsing User Data");
     }
   }, []);
 
@@ -91,7 +91,6 @@ export default function SharePropertyModal({
               right: 14,
               width: 10,
               height: 10,
-
               bgcolor: "background.paper",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 10,
