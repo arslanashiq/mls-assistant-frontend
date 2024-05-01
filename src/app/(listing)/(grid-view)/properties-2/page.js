@@ -5,6 +5,7 @@ import MobileMenu from "@/components/common/mobile-menu";
 import ProperteyFiltering from "@/components/listing/grid-view/listings/ProperteyFiltering";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation"; // Changed import
+import { googleAPIKey } from "../../../../../config/config";
 
 const GridFull3Col = () => {
   const searchParams = useSearchParams();
@@ -15,7 +16,7 @@ const GridFull3Col = () => {
   useEffect(() => {
     const handleInputChange = async (address) => {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyCbULP7ohg0MYQSZIUm4m_TdiAjHhjN3Ds`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleAPIKey}`
       );
       const data = await response.json();
       //console.log(data);

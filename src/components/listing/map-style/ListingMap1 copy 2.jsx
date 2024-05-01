@@ -10,6 +10,7 @@ import { useMemo, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { googleAPIKey } from "../../../../config/config";
 
 const option = {
   zoomControl: true,
@@ -195,7 +196,7 @@ export default function ListingMap1({ listings }) {
   const [getLocation, setLocation] = useState(null);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCbULP7ohg0MYQSZIUm4m_TdiAjHhjN3Ds",
+    googleMapsApiKey: googleAPIKey,
   });
   const center = useMemo(
     () => ({ lat: 42.4072, lng: -71.3824 }),

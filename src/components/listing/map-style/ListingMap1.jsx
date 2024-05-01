@@ -12,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PropertyCard from "@/components/common/PropertyCard";
 import { useRouter } from "next/navigation";
+import { googleAPIKey } from "../../../../config/config";
 
 const option = {
   zoomControl: true,
@@ -207,7 +208,7 @@ export default function ListingMap1({ listings, handleClickProperty }) {
   const [getLocation, setLocation] = useState(null);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCbULP7ohg0MYQSZIUm4m_TdiAjHhjN3Ds",
+    googleMapsApiKey: googleAPIKey,
   });
   const center = useMemo(
     () => ({ lat: 42.4072, lng: -71.3824 }),

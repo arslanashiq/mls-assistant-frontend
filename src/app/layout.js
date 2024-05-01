@@ -14,7 +14,7 @@ import "react-chatbot-kit/build/main.css";
 import Chat from "./Chat";
 import { SnackbarProvider } from "notistack";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { googleKey } from "../../config/config";
+import { googleAPIKey, googleKey } from "../../config/config";
 import AppContext from "@/custom-hooks/AppContext";
 import LoginModal from "@/components/modal/LoginModal";
 import EmailVerificationModal from "@/components/modal/EmailVerificationModal";
@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     // Initialize Google Maps API script
     const googleMapsScript = document.createElement("script");
-    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCbULP7ohg0MYQSZIUm4m_TdiAjHhjN3Ds&libraries=places`;
+    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${googleAPIKey}&libraries=places`;
     googleMapsScript.async = true;
     googleMapsScript.defer = true;
     // Set a callback to handle script loading completion
